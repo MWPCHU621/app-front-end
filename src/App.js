@@ -1,8 +1,29 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import axios from 'axios'
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      message: ""
+    };
+  }
+  componentDidMount() {
+    const options = {
+      method: "GET",
+      url: 'http://localhost:3000/api/testings/index'
+    }
+    axios(options)
+    .then((response) => {
+      if (response.data) {
+        this.setState({message: response.data.message})
+      }
+    })
+  }
+
+
   render() {
     return (
       <div className="App">
@@ -19,6 +40,7 @@ class App extends Component {
           >
             Learn React
           </a>
+          <p>{this.state.message}</p>
         </header>
       </div>
     );
