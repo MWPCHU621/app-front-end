@@ -5,7 +5,11 @@
   "dependencies": {
     "@material-ui/core": "^3.3.0",
     "axios": "^0.18.0",
+<<<<<<< HEAD
     "moment": "^2.22.2",
+=======
+    "jsonwebtoken": "^8.3.0",
+>>>>>>> edbf54484cebea37c26553b3ff97f858bda094ab
     "react": "^16.5.2",
     "react-axios": "^2.0.1",
     "react-big-calendar": "^0.20.1",
