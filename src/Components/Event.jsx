@@ -1,7 +1,10 @@
 import React, { Component } from  'react'
 
 class Event extends Component {
-  constructor(prop) {
+  constructor(props) {
+    super(props);
+    this.state = {
 
+    }
   }
 }
