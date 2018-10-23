@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.3.0",
     "axios": "^0.18.0",
+    "jsonwebtoken": "^8.3.0",
     "react": "^16.5.2",
     "react-axios": "^2.0.1",
     "react-dom": "^16.5.2",
