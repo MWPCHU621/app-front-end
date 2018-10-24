@@ -56,25 +56,12 @@ class App extends Component {
       <div>
         <Router>
           <Switch>
-<<<<<<< HEAD
-            <Route exact path="/" component={Dashboard} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login"  component={() => <Login handleLogin={this.handleLogin} />} />
-            <Route exact path="/calendar" component={Calendar} />
-            <Route exact path ="/calendar/create_event" component={CreateEvent} />
-            <Route exact path="/messages" component={ChatRoom} />
-=======
-
-
             <Route exact path="/" render={() => (<div><ButtonAppBar /><Home /></div>)} />
             <Route exact path="/dashboard" render={() => (<div><ButtonAppBar /><Dashboard /></div>)} />
             <Route path="/register" render={() => (<div><ButtonAppBar /><Register /></div>)} />
             <Route path="/login"  render={(props) => (<div><ButtonAppBar /><Login handleLogin={this.handleLogin} /></div>) } />
             <Route path="/calendar" render={() => (<div><ButtonAppBar /><Calendar /></div>)} />
             <Route path="/messages" render={(props) => (<div><ButtonAppBar /><ChatRoom username={this.state.username} /> </div>)} />
-
-
->>>>>>> 924f8c319811fcf534c87da88e5f1f55b3547cf0
           </Switch>
         </Router>
       </div>
