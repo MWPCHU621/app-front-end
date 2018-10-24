@@ -2,6 +2,8 @@ import React from 'react'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import "react-big-calendar/lib/css/react-big-calendar.css"
+import Dialog from '@material-ui/core/Dialog';
+import CalendarDialog from './CalendarDialog.jsx'
 
 const localizer = BigCalendar.momentLocalizer(moment)
 
@@ -32,12 +34,11 @@ class Calendar extends React.Component {
   //should redirect to new page to show details of the event
   eventClickAction = (e) => {
     let message = e.description + " at " + e.start.toDateString();
+    // Dialog(message);
     alert(message);
   }
 
-  getEvents = () => {
 
-  }
 
   render() {
     return(
@@ -50,7 +51,7 @@ class Calendar extends React.Component {
           events={this.state.events}
           startAccessor="start"
           endAccessor="end"
-          onSelectEvent={this.eventClickAction}
+          onSelectEvent={CalendarDialog}
         />
       </div>
     )
