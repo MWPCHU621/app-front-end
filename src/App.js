@@ -13,6 +13,7 @@ import Login from './user/login.jsx'
 import ButtonAppBar from './Components/Nav.jsx'
 import Calendar from './Components/Calendar.jsx'
 import ChatRoom from './Components/ChatRoom.jsx'
+import CreateEvent from './Components/CreateEvent.jsx'
 class App extends Component {
   constructor() {
     super();
@@ -43,10 +44,11 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            <Route path="/register" component={Register} />
-            <Route path="/login"  component={() => <Login handleLogin={this.handleLogin} />} />
-            <Route path="/calendar" component={Calendar} />
-            <Route path="/messages" component={ChatRoom} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login"  component={() => <Login handleLogin={this.handleLogin} />} />
+            <Route exact path="/calendar" component={Calendar} />
+            <Route exact path ="/calendar/create_event" component={CreateEvent} />
+            <Route exact path="/messages" component={ChatRoom} />
           </Switch>
           </Router>
       </div>
