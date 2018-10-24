@@ -7,6 +7,7 @@ export default class ChatRoom extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      userid: props.userid,
       user: props.username,
       messages: []
     }

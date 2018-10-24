@@ -7,6 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import { Link } from "react-router-dom";
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+
 
 const styles = {
   root: {
@@ -25,16 +29,37 @@ class ButtonAppBar extends Component {
   constructor() {
     super();
     this.state = {
-
+      show: false
     };
   }
+
   render() {
+    const sideBarContent = (
+      <div style={{width: 120}}>
+        <List>
+
+          <Link to="/Calendar">
+            <ListItem button>
+              <ListItemText primary="Calendar" />
+            </ListItem>
+          </Link>
+          <Link to="/messages">
+            <ListItem button>
+              <ListItemText primary="Message" />
+            </ListItem>
+          </Link>
+          <Link to="/todo">
+            <ListItem button>
+              <ListItemText primary="Info" />
+            </ListItem>
+          </Link>
+        </List>
+      </div>
+    );
     return (
       <div>
         <AppBar position="static">
           <Toolbar>
-            <IconButton color="inherit" aria-label="Menu">
-            </IconButton>
             <Typography variant="h6" color="inherit">
               Back on Track
             </Typography>
@@ -50,16 +75,14 @@ class ButtonAppBar extends Component {
             <Link to="/register">
               <Button color="inherit">Register</Button>
             </Link>
-            <Link to="/calendar">
-              <Button color="inherit">calendar</Button>
-            </Link>
-            <Link to="/messages">
-              <Button color="inherit">Message</Button>
-            </Link>
+            <Button color="inherit" onClick={this.props.handleLogout}>Log Out</Button>
+
           </Toolbar>
         </AppBar>
+        {sideBarContent}
       </div>
     );
+
   }
 }
 

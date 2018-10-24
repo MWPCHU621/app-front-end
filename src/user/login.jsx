@@ -24,7 +24,6 @@ class Login extends Component {
     }
     axios(option)
     .then((response) => {
-      console.log(response.data)
       if (response.status === 200) {
         const userInfo = jwt_decode(response.data.token)
         this.props.handleLogin(userInfo);
