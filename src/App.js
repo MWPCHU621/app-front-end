@@ -53,7 +53,7 @@ class App extends Component {
   render() {
     return (
       <div>
-      <Router>
+        <Router>
           <Switch>
 
 
@@ -66,7 +66,7 @@ class App extends Component {
 
 
           </Switch>
-          </Router>
+        </Router>
       </div>
     );
   }
