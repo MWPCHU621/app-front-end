@@ -5,6 +5,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import axios from 'axios'
 import  { Redirect } from 'react-router-dom'
+import jwt_decode from 'jwt-decode'
+
 class Login extends Component {
   constructor() {
     super();
@@ -24,8 +26,9 @@ class Login extends Component {
     .then((response) => {
       console.log(response.data)
       if (response.status === 200) {
-        this.props.handleLogin(response.data.token);
-       return <Redirect to='/'  />
+        const userInfo = jwt_decode(response.data.token)
+        this.props.handleLogin(userInfo);
+        this.setState({redirect: "/"})
       }
     })
   }
@@ -34,6 +37,10 @@ class Login extends Component {
   };
 
   render() {
+    if (this.state.redirect) {
+      return (
+        <Redirect to="/" />);
+    }
     return (
       <div>
         <AppBar position="static" color="default">

@@ -1,23 +1,33 @@
 import React, { Component } from "react";
+import TextField from '@material-ui/core/TextField';
 
 export default class ChatBar extends Component {
    constructor() {
     super();
-
     this.state = {
-      name: 'gonna change later',
       text: ''
     };
   }
 
   render() {
     return (
-      <footer className="chatbar">
+      <footer className="chatbar" style={{bottom: 0}} >
         <form onSubmit={this.handleFormSubmit}>
-          <input className="chatbar-message" value={this.state.text}
-          onChange={this.handleInputChange}
-          placeholder="Type a message and hit ENTER"
-          onKeyDown={this.keydownFunction} />
+          <TextField
+            id="outlined-full-width"
+            label="Chat Bar"
+            style={{ margin: 8 }}
+            placeholder="Type a message and hit ENTER"
+            fullWidth
+            margin="normal"
+            variant="outlined"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            value={this.state.text}
+            onChange={this.handleInputChange}
+            onKeyDown={this.keydownFunction}
+          />
         </form>
       </footer>
     );
@@ -33,7 +43,7 @@ export default class ChatBar extends Component {
   };
 
   handleFormSubmit = e => {
-
+    this.props.sendMsg(this.state.text)
     this.setState({ text: '' });
   };
 }
