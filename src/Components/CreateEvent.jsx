@@ -24,8 +24,8 @@ class CreateEvent extends Component {
     console.log(this.state)
     const option = {
       method: "POST",
-      url: 'http://localhost:3000/api/users/create',
-      data: { user: this.state }
+      url: 'http://localhost:3000/api/events/create',
+      data: { events: this.state }
     }
     axios(option)
     .then((response) => {
@@ -53,7 +53,7 @@ class CreateEvent extends Component {
         <form onSubmit={this.handleSubmit}>
 
           <TextField
-            name = "Title"
+            name = "title"
             label="Title"
             style={{ margin: 8 }}
             placeholder="Enter title of event"
@@ -84,11 +84,11 @@ class CreateEvent extends Component {
             margin="normal"
             onChange={this.handleInputChange}
           />
-          <InputLabel htmlFor="role">All Day</InputLabel>
+          <InputLabel htmlFor="allday">All Day</InputLabel>
           <Select
-            id="role"
-            value={this.state.role}
-            name="role"
+            id="allday"
+            value={this.state.allday}
+            name="allday"
             onChange={this.handleInputChange}
             style={{minWidth: 120}}
           >

@@ -12,6 +12,7 @@ class Calendar extends React.Component {
         start: new Date(),
         end: new Date(moment().add(2, "days")),
         title: "random event",
+        description: "event description",
       },
       {
         start: new Date('2018-12-17'),
@@ -30,7 +31,12 @@ class Calendar extends React.Component {
   //handle action when an event on the calendar is click.
   //should redirect to new page to show details of the event
   eventClickAction = (e) => {
-    console.log(e);
+    let message = e.description + " at " + e.start.toDateString();
+    alert(message);
+  }
+
+  getEvents = () => {
+
   }
 
   render() {
@@ -44,7 +50,7 @@ class Calendar extends React.Component {
           events={this.state.events}
           startAccessor="start"
           endAccessor="end"
-          onSelectEvent={event => alert(event.start)}
+          onSelectEvent={this.eventClickAction}
         />
       </div>
     )
