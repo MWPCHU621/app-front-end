@@ -25,7 +25,8 @@ class App extends Component {
     this.state = {
       username: (localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')).first_name : ''),
       role: (localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')).role : null),
-      userid: (localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')).user_id : null)
+      userid: (localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')).user_id : null),
+      relation: (localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')).relation : null)
     };
   }
   // componentDidMount() {
@@ -55,8 +56,19 @@ class App extends Component {
     this.setState({
       username: userInfo.first_name,
       role: userInfo.role,
-      userid: userInfo.user_id
+      userid: userInfo.user_id,
+      relation: userInfo.relation
     });
+  }
+  updateRelation = (relation) => {
+    this.setState({
+      relation: relation
+    });
+    let token = JSON.parse(localStorage.getItem('token'));
+    localStorage.removeItem('token');
+    token.relation = relation;
+    let myStorage = window.localStorage;
+    myStorage.setItem("token", JSON.stringify(token))
   }
   render() {
     return (
@@ -66,10 +78,15 @@ class App extends Component {
             <Route exact path="/" render={() => (
               <div><ButtonAppBar handleLogout={this.handleLogout} /><Home /></div>
               )} />
-            <Route exact path="/dashboard" render={() => (<div><ButtonAppBar /><Dashboard /></div>)} />
+            <Route exact path="/dashboard" render={() => (
+              <div><ButtonAppBar />
+              <Dashboard userid={this.state.userid}
+              relation={this.state.relation}
+              role={this.state.role} updateRelation={this.updateRelation} />
+              </div>)} />
             <Route path="/register" render={() => (<div><ButtonAppBar /><Register /></div>)} />
             <Route path="/login"  render={(props) => (<div><ButtonAppBar /><Login handleLogin={this.handleLogin} /></div>) } />
-            <Route path="/calendar" render={() => (<div><ButtonAppBar /><Calendar /></div>)} />
+            <Route path="/calendar" render={() => (<div><ButtonAppBar /><Calendar relation={this.state.relation} /></div>)} />
             <Route path="/messages" render={(props) => (
               <div><ButtonAppBar />
               <ChatRoom username={this.state.username}

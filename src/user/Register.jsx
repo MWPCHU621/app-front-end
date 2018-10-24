@@ -42,7 +42,6 @@ class Register extends Component {
   };
 
 
-  //this.props.handleRegister
   render() {
     return (
       <div>
