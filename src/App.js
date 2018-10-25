@@ -78,16 +78,19 @@ class App extends Component {
           <Switch>
             <Route exact path="/" render={() => (
               <div><ButtonAppBar handleLogout={this.handleLogout} /><Home /></div>
-              )} />
+              )}
+            />
             <Route exact path="/dashboard" render={() => (
               <div><ButtonAppBar />
               <Dashboard userid={this.state.userid}
               relation={this.state.relation}
               role={this.state.role} updateRelation={this.updateRelation} />
-              </div>)} />
+              </div>)}
+            />
             <Route path="/register" render={() => (<div><ButtonAppBar /><Register /></div>)} />
             <Route path="/login"  render={(props) => (<div><ButtonAppBar /><Login handleLogin={this.handleLogin} /></div>) } />
-            <Route path="/calendar" render={() => (<div><ButtonAppBar /><Calendar relation={this.state.relation} /></div>)} />
+            <Route exact path="/calendar" render={(props) => (<div><ButtonAppBar /><Calendar relation={this.state.relation} {...props} /></div>)} />
+            <Route exact path = "/calendar/create_event" component = {CreateEvent} />
             <Route path="/messages" render={(props) => (
               <div><ButtonAppBar />
               <ChatRoom username={this.state.username}

@@ -2,7 +2,6 @@ import React from 'react'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import "react-big-calendar/lib/css/react-big-calendar.css"
-import Dialog from '@material-ui/core/Dialog';
 import CalendarDialog from './CalendarDialog.jsx'
 
 const localizer = BigCalendar.momentLocalizer(moment)
@@ -41,7 +40,9 @@ class Calendar extends React.Component {
 
 
   render() {
+    console.log("calendar", this.props);
     return(
+
       <div style={{height: '800px'}}>
         <button onClick={this.createEventRouteChange}>
           Add new Event
