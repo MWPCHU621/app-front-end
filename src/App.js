@@ -15,6 +15,7 @@ import ButtonAppBar from './Components/Nav.jsx'
 import Calendar from './Components/Calendar.jsx'
 import ChatRoom from './Components/ChatRoom.jsx'
 import CreateEvent from './Components/CreateEvent.jsx'
+import EditEvent from  './Components/EditEvent.jsx'
 import Home from './Components/Home.jsx'
 import Todo from './Components/todo.jsx'
 
@@ -91,6 +92,7 @@ class App extends Component {
             <Route path="/login"  render={(props) => (<div><ButtonAppBar /><Login handleLogin={this.handleLogin} /></div>) } />
             <Route exact path="/calendar" render={(props) => (<div><ButtonAppBar /><Calendar relation={this.state.relation} {...props} /></div>)} />
             <Route exact path = "/calendar/create_event" component = {CreateEvent} />
+            <Route exact path = "/calendar/edit_event" component={EditEvent} />
             <Route path="/messages" render={(props) => (
               <div><ButtonAppBar />
               <ChatRoom username={this.state.username}
