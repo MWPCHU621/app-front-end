@@ -27,7 +27,7 @@ class Login extends Component {
       if (response.status === 200) {
         const userInfo = jwt_decode(response.data.token)
         this.props.handleLogin(userInfo);
-        this.setState({redirect: "/"})
+        this.setState({redirect: "/dashboard"})
       }
     })
   }
@@ -38,7 +38,7 @@ class Login extends Component {
   render() {
     if (this.state.redirect) {
       return (
-        <Redirect to="/" />);
+        <Redirect to={this.state.redirect} />);
     }
     return (
       <div>

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import axios from 'axios'
+
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from 'react-router-dom';
 import Dashboard from './Dashboard.jsx'
 import Register from './user/Register.jsx'
@@ -27,23 +26,10 @@ class App extends Component {
       last_name: (localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')).last_name : ''),
       role: (localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')).role : null),
       userid: (localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')).user_id : null),
-      relation: (localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')).relation : null),
-      relation_ids: (localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')).relation_ids : null)
-
+      relation: (localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')).relation : null)
     };
   }
-  // componentDidMount() {
-  //   const options = {
-  //     method: "GET",
-  //     url: 'http://localhost:3000/api/testings/index'
-  //   }
-  //   axios(options)
-  //   .then((response) => {
-  //     if (response.data) {
-  //       // this.setState({message: response.data.message})
-  //     }
-  //   })
-  // }
+
   handleLogout = () => {
     localStorage.removeItem('token');
     this.setState({
@@ -62,8 +48,7 @@ class App extends Component {
       last_name: userInfo.last_name,
       role: userInfo.role,
       userid: userInfo.user_id,
-      relation: userInfo.relation,
-      relation_ids: userInfo.relation_ids
+      relation: userInfo.relation
     });
   }
   updateRelation = (relation) => {
@@ -82,7 +67,7 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/" render={() => (
-              <div><ButtonAppBar handleLogout={this.handleLogout} /><Home /></div>
+              <div><ButtonAppBar userid={this.state.userid} handleLogout={this.handleLogout} /><Home /></div>
               )}
             />
             <Route exact path="/dashboard" render={() => (
@@ -92,16 +77,16 @@ class App extends Component {
               role={this.state.role} updateRelation={this.updateRelation} />
               </div>)}
             />
-            <Route path="/register" render={() => (<div><ButtonAppBar /><Register /></div>)} />
-            <Route path="/login"  render={(props) => (<div><ButtonAppBar /><Login handleLogin={this.handleLogin} /></div>) } />
-            <Route exact path="/calendar" render={(props) => (<div><ButtonAppBar /><Calendar relation={this.state.relation} {...props} /></div>)} />
+            <Route path="/register" render={() => (<div><ButtonAppBar userid={this.state.userid} /><Register /></div>)} />
+            <Route path="/login"  render={(props) => (<div><ButtonAppBar userid={this.state.userid} /><Login handleLogin={this.handleLogin} /></div>) } />
+            <Route exact path="/calendar" render={(props) => (<div><ButtonAppBar userid={this.state.userid} /><Calendar relation={this.state.relation} {...props} /></div>)} />
             <Route exact path = "/calendar/create_event" component = {CreateEvent} />
             <Route path="/messages" render={(props) => (
-              <div><ButtonAppBar />
+              <div><ButtonAppBar userid={this.state.userid} />
               <ChatRoom userInfo={this.state} />
               </div>
               )} />
-            <Route path="/todo" render={(props) => (<div><ButtonAppBar /><Todo username={this.state.username} /> </div>)} />
+            <Route path="/todo" render={(props) => (<div><ButtonAppBar userid={this.state.userid} /><Todo userInfo={this.state} /> </div>)} />
 
 
 

@@ -32,9 +32,7 @@ class Register extends Component {
     .then((response) => {
       console.log(response.data)
       return <Redirect to='/'  />
-      if (response.data.status === 500) {
-       return <Redirect to='/'  />
-      }
+
     })
   }
   handleInputChange = e => {
