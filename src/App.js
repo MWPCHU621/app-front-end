@@ -18,6 +18,7 @@ import CreateEvent from './Components/CreateEvent.jsx'
 import EditEvent from  './Components/EditEvent.jsx'
 import Home from './Components/Home.jsx'
 import Todo from './Components/todo.jsx'
+import Search from './Components/Search.jsx'
 
 
 class App extends Component {
@@ -103,8 +104,8 @@ class App extends Component {
               <ChatRoom userInfo={this.state} />
               </div>
               )} />
-            <Route path="/todo" render={(props) => (<div><ButtonAppBar /><Todo username={this.state.username} /> </div>)} />
-
+            <Route exact path="/todo" render={(props) => (<div><ButtonAppBar /><Todo username={this.state.username} /> </div>)} />
+            <Route exact path="/search"  render={(props) => (<div><ButtonAppBar /><Search /> </div> )} />
 
 
           </Switch>
