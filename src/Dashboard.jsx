@@ -3,8 +3,10 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios'
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Toolbar from '@material-ui/core/Toolbar';
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -13,7 +15,8 @@ export default class Dashboard extends Component {
       userid: props.userid,
       add_client_email: "",
       role: props.role,
-      relation: props.relation
+      relation: props.relation,
+      tab: 0
     }
   }
   handleInputChange = e => {
@@ -38,11 +41,30 @@ export default class Dashboard extends Component {
     })
 
   }
+  handleChange = (event, value) => {
+    this.setState({tab: value});
+  }
   render() {
     return (
       <div>
-        <p>Im Dashboard page</p>
-        <form onSubmit={this.handleSubmit}>
+      <AppBar position="static" color="default">
+          <Toolbar>
+              Dashboard
+          </Toolbar>
+        </AppBar>
+        <AppBar position="static">
+          <Tabs value={this.state.tab} onChange={this.handleChange}>
+          <Tab label="New Client" />
+          {
+            this.state.relation.map((person, index) => (
+              <Tab label={person.first_name} />
+            )
+            )
+          }
+          </Tabs>
+        </AppBar>
+        {
+          this.state.tab === 0 &&  <form onSubmit={this.handleSubmit}>
           <TextField
               label="Add Client"
               style={{ margin: 8 }}
@@ -53,6 +75,18 @@ export default class Dashboard extends Component {
             />
           <Button color="inherit" type="submit">Add</Button>
         </form>
+      }
+       {   this.state.relation.map((person, index) => (
+            (this.state.tab - 1) === index &&
+            <div>
+            <p>First Name: {person.first_name}</p>
+            <p>Last Name: {person.last_name}</p>
+            <p>Email: {person.email}</p>
+            </div>
+            )
+          )
+        }
+
 
         <List>
 

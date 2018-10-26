@@ -5,7 +5,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import { Link } from "react-router-dom";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -26,18 +25,47 @@ const styles = {
 };
 
 class ButtonAppBar extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      userid: props.userid,
       show: false
     };
   }
+  logInHelper = () => {
+    if (this.state.userid) {
+      return (<div><Link to="/login">
+              <Button color="inherit">Login</Button>
+            </Link>
+            <Link to="/register">
+              <Button color="inherit">Register</Button>
+            </Link></div>)
+    } else {
+      return (<Button color="inherit" onClick={this.props.handleLogout}>Log Out</Button>)
+    }
+  }
 
   render() {
+
+    const topBarContent = (<AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6" color="inherit">
+              Back on Track
+            </Typography>
+            <Link to="/">
+              <Button color="inherit">Home</Button>
+            </Link>
+            { this.logInHelper() }
+          </Toolbar>
+        </AppBar>)
     const sideBarContent = (
       <div style={{width: 120}}>
         <List>
-
+          <Link to="/dashboard">
+          <ListItem button>
+              <ListItemText primary="Dashboard" />
+            </ListItem>
+          </Link>
           <Link to="/Calendar">
             <ListItem button>
               <ListItemText primary="Calendar" />
@@ -63,28 +91,9 @@ class ButtonAppBar extends Component {
     );
     return (
       <div>
-        <AppBar position="static">
-          <Toolbar>
-            <Typography variant="h6" color="inherit">
-              Back on Track
-            </Typography>
-            <Link to="/">
-              <Button color="inherit">Home</Button>
-            </Link>
-            <Link to="/dashboard">
-              <Button color="inherit">Dashboard</Button>
-            </Link>
-            <Link to="/login">
-              <Button color="inherit">Login</Button>
-            </Link>
-            <Link to="/register">
-              <Button color="inherit">Register</Button>
-            </Link>
-            <Button color="inherit" onClick={this.props.handleLogout}>Log Out</Button>
-
-          </Toolbar>
-        </AppBar>
+        {topBarContent}
         {sideBarContent}
+
       </div>
     );
 
