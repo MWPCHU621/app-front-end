@@ -14,7 +14,7 @@ export default class Messages extends Component {
 
             <List>
               <ListItem button>
-                <ListItemText primary={msg.username} secondary={msg.content} />
+                <ListItemText primary={msg.sender_name} secondary={msg.content} />
               </ListItem>
             </List>
           </div>

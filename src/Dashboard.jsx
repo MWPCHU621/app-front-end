@@ -30,6 +30,7 @@ export default class Dashboard extends Component {
     axios(option)
     .then((response) => {
       if (response.status === 200) {
+        console.log(response.data.updated_relation)
         this.props.updateRelation(response.data.updated_relation);
         this.setState({relation: response.data.updated_relation})
       }
@@ -54,11 +55,7 @@ export default class Dashboard extends Component {
         </form>
 
         <List>
-          {this.state.relation.forEach((element) => (
-            <ListItem>
-              <ListItemText primary={element} />
-            </ListItem>
-          ))}
+
 
         </List>
 
