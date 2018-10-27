@@ -17,8 +17,10 @@ class CreateEvent extends Component {
       start: '',
       end: '',
       allday: false,
+      patient_userid: '',
     };
   }
+
   handleSubmit = (e) => {
     e.preventDefault();
     console.log(this.state)
@@ -39,9 +41,6 @@ class CreateEvent extends Component {
   };
 
 
-
-
-  //this.props.handleRegister
   render() {
     return (
       <div>
@@ -66,6 +65,7 @@ class CreateEvent extends Component {
             style={{ margin: 8 }}
             placeholder="Enter description of event"
             margin="normal"
+            multiline
             onChange={this.handleInputChange}
           />
           <TextField
@@ -95,11 +95,28 @@ class CreateEvent extends Component {
             <MenuItem value={'true'}>True</MenuItem>
             <MenuItem value={'false'}>False</MenuItem>
           </Select>
+
+          <InputLabel htmlFor="Patient">Patient</InputLabel>
+          <Select
+            id="patient_userid"
+            value={this.state.patient_userid}
+            name="patient_userid"
+            onChange={this.handleInputChange}
+            style={{minWidth:120}}
+          >
+            {
+              JSON.parse(localStorage.getItem('token')).relation.map(person => (
+                <MenuItem value={person.id}>{person.first_name} {person.last_name}</MenuItem>
+              ))
+            }
+          </Select>
           <Button type="submit" color="primary">Submit</Button>
         </form>
+
         <Button color="primary">
             <a href="/calendar" style={{textDecoration:"none"}}>Cancel</a>
         </Button>
+
       </div>
 
     );

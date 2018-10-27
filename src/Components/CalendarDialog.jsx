@@ -38,9 +38,12 @@ class SimpleModal extends React.Component {
 
   }
 
-
   redirectToEdit = () => {
     this.setState({toEdit:true});
+  }
+
+  handleDelete = (e) => {
+    console.log(this.props.eventInfo);
   }
 
   render() {
@@ -53,8 +56,14 @@ class SimpleModal extends React.Component {
           }} />
     }
 
-    return (
+    let editButton;
+    let deleteButton;
+    if(JSON.parse(localStorage.getItem('token')).role === "doctor") {
+      editButton = <Button onClick={this.redirectToEdit}>Edit</Button>
+      deleteButton = <Button onClick={this.handleDelete}>Delete</Button>
+    }
 
+    return (
       <div>
         <Typography gutterBottom>Click to get the full Modal experience!</Typography>
         <Button onClick={this.props.eventClickAction}>Open Modal</Button>
@@ -71,7 +80,12 @@ class SimpleModal extends React.Component {
             <Typography variant="subtitle1" id="simple-modal-description">
               {this.props.eventInfo.description}
             </Typography>
-            <Button onClick={this.redirectToEdit}>Edit</Button>
+            <Typography variant = "subtitle1" id="simple-modal-description">
+              Start Time
+            </Typography>
+
+            {editButton}
+            {deleteButton}
             <Button onClick={this.props.eventClickAction} style={{border:"1px solid grey"}}>Close</Button>
           </div>
         </Modal>
