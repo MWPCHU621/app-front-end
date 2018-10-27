@@ -42,17 +42,21 @@ class SimpleModal extends React.Component {
   }
 
   handleDelete = (e) => {
-    console.log(this.props.eventInfo);
-    const fakeID = 1
+    console.log(this.props.eventInfo.id);
     const option = {
       method: "POST",
       url: 'http://localhost:3000/api/events/destroy',
-      data: { id: fakeID }
+      data: { id: this.props.eventInfo.id }
     }
     axios(option)
     .then((response) => {
       console.log(response.data)
+      this.props.eventClickAction()
     })
+  }
+
+  componentDidMount(){
+
   }
 
   render() {

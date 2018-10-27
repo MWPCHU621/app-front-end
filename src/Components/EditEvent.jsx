@@ -16,7 +16,7 @@ class EditEvent extends Component {
       description: '',
       start: '',
       end: '',
-      "allday?": false,
+      allday: false,
       patient_userid: '',
     };
   }
@@ -97,9 +97,9 @@ class EditEvent extends Component {
           />
           <InputLabel htmlFor="allday">All Day</InputLabel>
           <Select
-            id="allday?"
+            id="allday"
             value={this.props.location.state ? this.props.location.state.referrer.allday : ""}
-            name="allday?"
+            name="allday"
             onChange={this.handleInputChange}
             style={{minWidth: 120}}
           >
@@ -107,11 +107,11 @@ class EditEvent extends Component {
             <MenuItem value={'false'}>False</MenuItem>
           </Select>
 
-          <InputLabel htmlFor="Patient">Patient</InputLabel>
+          <InputLabel htmlFor="client">Client</InputLabel>
           <Select
-            id="patient_userid"
-            value={this.props.location.state ? this.props.location.state.referrer.patient_userid : ""}
-            name="patient_userid"
+            id="client_id"
+            value={this.props.location.state ? this.props.location.state.referrer.client_id : ""}
+            name="client_id"
             onChange={this.handleInputChange}
             style={{minWidth:120}}
           >

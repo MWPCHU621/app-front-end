@@ -16,7 +16,7 @@ class CreateEvent extends Component {
       description: '',
       start: '',
       end: '',
-      "allday?": false,
+      allday: false,
       client_id: '',
       doctor_id: JSON.parse(localStorage.getItem('token')).user_id,
 
@@ -91,9 +91,9 @@ class CreateEvent extends Component {
           />
           <InputLabel htmlFor="allday">All Day</InputLabel>
           <Select
-            id="allday?"
+            id="allday"
             value={this.state.allday}
-            name="allday?"
+            name="allday"
             onChange={this.handleInputChange}
             style={{minWidth: 120}}
           >
@@ -101,7 +101,7 @@ class CreateEvent extends Component {
             <MenuItem value={'false'}>False</MenuItem>
           </Select>
 
-          <InputLabel htmlFor="Patient">Client</InputLabel>
+          <InputLabel htmlFor="Client">Client</InputLabel>
           <Select
             id="client_id"
             value={this.state.client_id}
