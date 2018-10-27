@@ -40,8 +40,6 @@ class EditEvent extends Component {
 
 
 
-
-  //this.props.handleRegister
   render() {
     return (
       <div>

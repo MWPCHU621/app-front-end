@@ -35,7 +35,6 @@ class SimpleModal extends React.Component {
 
   state = {
     toEdit:false,
-
   }
 
   redirectToEdit = () => {
@@ -43,7 +42,7 @@ class SimpleModal extends React.Component {
   }
 
   handleDelete = (e) => {
-    console.log(this.props.eventInfo);
+
   }
 
   render() {
@@ -81,9 +80,8 @@ class SimpleModal extends React.Component {
               {this.props.eventInfo.description}
             </Typography>
             <Typography variant = "subtitle1" id="simple-modal-description">
-              Start Time
+              {this.props.eventInfo.start.toString()}
             </Typography>
-
             {editButton}
             {deleteButton}
             <Button onClick={this.props.eventClickAction} style={{border:"1px solid grey"}}>Close</Button>

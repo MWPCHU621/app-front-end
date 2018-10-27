@@ -47,6 +47,7 @@ class Calendar extends React.Component {
     this.setState({
       show:!this.state.show,
       selectedEvent: {
+        id:e.id,
         title: e.title,
         description: e.description,
         start: e.start,
