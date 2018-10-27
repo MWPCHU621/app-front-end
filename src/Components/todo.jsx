@@ -111,7 +111,7 @@ class Todo extends Component {
       <div>
         <AppBar position="static" color="default">
           <Toolbar>
-              Task
+              Reminder
           </Toolbar>
         </AppBar>
 
