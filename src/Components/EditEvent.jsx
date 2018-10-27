@@ -16,21 +16,30 @@ class EditEvent extends Component {
       description: '',
       start: '',
       end: '',
-      allday: false,
+      "allday?": false,
       patient_userid: '',
     };
   }
   handleSubmit = (e) => {
     e.preventDefault();
+    const fakeData = {
+      id: 1,
+      title: 'test1',
+      description: 'test1',
+      start: '2018-01-01',
+      end: '2018-01-01',
+      client_id: 2,
+      doctor_id: JSON.parse(localStorage.getItem('token')).user_id
+    }
     const option = {
       method: "POST",
       url: 'http://localhost:3000/api/events/update',
-      data: { events: this.state }
+      data: { event: fakeData }
     }
     axios(option)
     .then((response) => {
       console.log(response.data)
-      return <Redirect to='/'  />
+      this.setState({redirect: "/calendar"})
     })
   }
 
@@ -88,9 +97,9 @@ class EditEvent extends Component {
           />
           <InputLabel htmlFor="allday">All Day</InputLabel>
           <Select
-            id="allday"
+            id="allday?"
             value={this.props.location.state ? this.props.location.state.referrer.allday : ""}
-            name="allday"
+            name="allday?"
             onChange={this.handleInputChange}
             style={{minWidth: 120}}
           >
