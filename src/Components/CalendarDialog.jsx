@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
-
+import axios from 'axios'
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
@@ -44,6 +44,16 @@ class SimpleModal extends React.Component {
 
   handleDelete = (e) => {
     console.log(this.props.eventInfo);
+    const fakeID = 1
+    const option = {
+      method: "POST",
+      url: 'http://localhost:3000/api/events/destroy',
+      data: { id: fakeID }
+    }
+    axios(option)
+    .then((response) => {
+      console.log(response.data)
+    })
   }
 
   render() {

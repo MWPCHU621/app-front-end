@@ -4,29 +4,14 @@ import moment from 'moment'
 import "react-big-calendar/lib/css/react-big-calendar.css"
 import CalendarDialog from './CalendarDialog.jsx'
 import Button from '@material-ui/core/Button';
-
+import axios from 'axios'
 const localizer = BigCalendar.momentLocalizer(moment)
 
 
 
 class Calendar extends React.Component {
   state = {
-    events: [
-      {
-        id:1,
-        start: new Date(),
-        end: new Date(moment().add(2, "days")),
-        title: "random event",
-        description: "event description",
-      },
-      {
-        id:2,
-        start: new Date('2018-12-17'),
-        end: new Date('2018-12-18'),
-        title: 'new random event',
-        description: 'this is random event 2',
-      },
-    ],
+    events: [],
     show: false,
     selectedEvent: {},
   }
@@ -58,9 +43,50 @@ class Calendar extends React.Component {
     }
   }
 
+  componentDidMount() {
+    const options = {
+      method: "GET",
+      url: 'http://localhost:3000/api/events/index',
+      params: {id: JSON.parse(localStorage.getItem('token')).user_id,
+      role: JSON.parse(localStorage.getItem('token')).role}
+    }
+    axios(options)
+    .then((response) => {
+      const fakeData = [
+      {
+        id:1,
+        start: new Date(),
+        end: new Date(moment().add(2, "days")),
+        title: "random event",
+        description: "event description",
+        doctor_id: 1,
+        client_id: 2
+      },
+      {
+        id:2,
+        start: new Date('2018-12-17'),
+        end: new Date('2018-12-18'),
+        title: 'new random event',
+        description: 'this is random event 2',
+        doctor_id: 1,
+        client_id: 2
+      }
+    ]
+      // const task_list = response.data.tasks;
+      // const tasks = {};
+      // task_list.forEach((task) => {
+      //   if (!tasks[task.user_id]) {
+      //     tasks[task.user_id] = [task]
+      //   } else {
+      //     tasks[task.user_id].push(task);
+      //   }
+      // })
+      this.setState({events: fakeData})
+    })
 
 
 
+  }
 
   render() {
     let addButton;
@@ -93,9 +119,7 @@ class Calendar extends React.Component {
     )
   }
 
-  componentDidMount() {
 
-  }
 
 }
 

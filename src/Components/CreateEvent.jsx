@@ -17,22 +17,23 @@ class CreateEvent extends Component {
       start: '',
       end: '',
       allday: false,
-      patient_userid: '',
+      client_id: '',
+      doctor_id: JSON.parse(localStorage.getItem('token')).user_id,
+
     };
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state)
     const option = {
       method: "POST",
       url: 'http://localhost:3000/api/events/create',
-      data: { events: this.state }
+      data: { event: this.state }
     }
     axios(option)
     .then((response) => {
       console.log(response.data)
-      return <Redirect to='/'  />
+      this.setState({redirect: "/calendar"})
     })
   }
 
@@ -42,6 +43,10 @@ class CreateEvent extends Component {
 
 
   render() {
+    if (this.state.redirect) {
+      return (
+        <Redirect to={this.state.redirect} />);
+    }
     return (
       <div>
         <AppBar position="static" color="default">
@@ -96,11 +101,11 @@ class CreateEvent extends Component {
             <MenuItem value={'false'}>False</MenuItem>
           </Select>
 
-          <InputLabel htmlFor="Patient">Patient</InputLabel>
+          <InputLabel htmlFor="Patient">Client</InputLabel>
           <Select
-            id="patient_userid"
-            value={this.state.patient_userid}
-            name="patient_userid"
+            id="client_id"
+            value={this.state.client_id}
+            name="client_id"
             onChange={this.handleInputChange}
             style={{minWidth:120}}
           >
