@@ -88,7 +88,7 @@ class App extends Component {
               <ChatRoom userInfo={this.state} />
               </div>
               )} />
-            <Route path="/todo" render={(props) => (<div><ButtonAppBar userid={this.state.userid} /><Todo userInfo={this.state} /> </div>)} />
+            <Route path="/task" render={(props) => (<div><ButtonAppBar userid={this.state.userid} /><Todo userInfo={this.state} /> </div>)} />
 
 
 

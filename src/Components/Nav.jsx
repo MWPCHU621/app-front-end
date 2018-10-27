@@ -33,7 +33,7 @@ class ButtonAppBar extends Component {
     };
   }
   logInHelper = () => {
-    if (this.state.userid) {
+    if (!this.state.userid) {
       return (<div><Link to="/login">
               <Button color="inherit">Login</Button>
             </Link>
@@ -43,6 +43,8 @@ class ButtonAppBar extends Component {
     } else {
       return (<Button color="inherit" onClick={this.props.handleLogout}>Log Out</Button>)
     }
+  }
+  componentDidMount() {
   }
 
   render() {
@@ -78,7 +80,7 @@ class ButtonAppBar extends Component {
           </Link>
           <Link to="/todo">
             <ListItem button>
-              <ListItemText primary="Info" />
+              <ListItemText primary="Task" />
             </ListItem>
           </Link>
         </List>

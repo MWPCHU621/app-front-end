@@ -11,6 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import axios from 'axios'
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 class Todo extends Component {
   constructor(props) {
     super(props);
@@ -47,28 +48,54 @@ class Todo extends Component {
     })
   }
   handleClick = (person) => {
-    console.log("clicked", person.id)
     const options = {
       method: "POST",
       url: 'http://localhost:3000/api/tasks/create',
-      data: {id: person.id}
+      data: {newtask: {
+        user_id: person.id,
+        title: this.state.new_title,
+        content: this.state.new_content
+      }}
     }
+    this.setState({new_title: '',
+      new_content: ''})
     axios(options)
     .then((response) => {
-      console.log(response.data);
+      const tasks = this.state.tasks;
+      tasks[person.id] = response.data.tasks;
+      this.setState({tasks})
     })
   }
   task_helper = (person) => {
     return this.state.tasks[person.id] ? this.state.tasks[person.id] : [];
   }
-  handleInputChange = () => {
-
-  }
+  handleInputChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
   add_helper = (person) => {
     return (
       <TableRow>
         <TableCell>
-
+          <TextField
+            name = "new_title"
+            label="New Title"
+            style={{ margin: 8 }}
+            placeholder="Enter Title"
+            margin="normal"
+            value={this.state.new_title}
+            onChange={this.handleInputChange}
+          />
+        </TableCell>
+        <TableCell>
+          <TextField
+            name = "new_content"
+            label="New Description"
+            style={{ margin: 8 }}
+            placeholder="Enter Description"
+            margin="normal"
+            value={this.state.new_content}
+            onChange={this.handleInputChange}
+          />
         </TableCell>
         <TableCell></TableCell>
         <TableCell>

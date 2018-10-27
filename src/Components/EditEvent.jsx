@@ -21,10 +21,9 @@ class EditEvent extends Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state)
     const option = {
       method: "POST",
-      url: 'http://localhost:3000/api/events/create',
+      url: 'http://localhost:3000/api/events/update',
       data: { events: this.state }
     }
     axios(option)
