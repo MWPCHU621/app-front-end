@@ -17,6 +17,7 @@ class EditEvent extends Component {
       start: '',
       end: '',
       allday: false,
+      patient_userid: '',
     };
   }
   handleSubmit = (e) => {
@@ -46,7 +47,7 @@ class EditEvent extends Component {
       <div>
         <AppBar position="static" color="default">
           <Toolbar>
-              Create a new Event
+              Edit Event
           </Toolbar>
         </AppBar>
         <form onSubmit={this.handleSubmit}>
@@ -98,6 +99,22 @@ class EditEvent extends Component {
             <MenuItem value={'true'}>True</MenuItem>
             <MenuItem value={'false'}>False</MenuItem>
           </Select>
+
+          <InputLabel htmlFor="Patient">Patient</InputLabel>
+          <Select
+            id="patient_userid"
+            value={this.props.location.state ? this.props.location.state.referrer.patient_userid : ""}
+            name="patient_userid"
+            onChange={this.handleInputChange}
+            style={{minWidth:120}}
+          >
+            {
+              JSON.parse(localStorage.getItem('token')).relation.map(person => (
+                <MenuItem value={person.id}>{person.first_name} {person.last_name}</MenuItem>
+              ))
+            }
+          </Select>
+
           <Button type="submit" color="primary">Submit</Button>
         </form>
         <Button color="primary">

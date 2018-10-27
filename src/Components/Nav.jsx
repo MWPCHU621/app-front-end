@@ -83,6 +83,11 @@ class ButtonAppBar extends Component {
               <ListItemText primary="Task" />
             </ListItem>
           </Link>
+          <Link to="/search">
+            <ListItem button>
+              <ListItemText primary="search" />
+            </ListItem>
+          </Link>
         </List>
       </div>
     );

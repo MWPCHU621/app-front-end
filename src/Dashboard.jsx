@@ -45,6 +45,17 @@ export default class Dashboard extends Component {
     this.setState({tab: value});
   }
   render() {
+    let tabs;
+    if(JSON.parse(localStorage.getItem('token')).role === "doctor"){
+      tabs = <Tabs value={this.state.tab} onChange={this.handleChange}>
+      <Tab label="New Client" />
+      {
+        this.state.relation.map((person, index) => (
+          <Tab label={person.first_name} />
+        ))
+      }
+      </Tabs>
+    }
     return (
       <div>
       <AppBar position="static" color="default">
@@ -53,19 +64,12 @@ export default class Dashboard extends Component {
           </Toolbar>
         </AppBar>
         <AppBar position="static">
-          <Tabs value={this.state.tab} onChange={this.handleChange}>
-          <Tab label="New Client" />
-          {
-            this.state.relation.map((person, index) => (
-              <Tab label={person.first_name} />
-            )
-            )
-          }
-          </Tabs>
+          {tabs}
         </AppBar>
         {
-          this.state.tab === 0 &&  <form onSubmit={this.handleSubmit}>
-          <TextField
+          this.state.tab === 0 &&
+          <form onSubmit={this.handleSubmit}>
+            <TextField
               label="Add Client"
               style={{ margin: 8 }}
               placeholder="Enter Client Email"
@@ -74,17 +78,16 @@ export default class Dashboard extends Component {
               value={this.state.add_client_email}
             />
           <Button color="inherit" type="submit">Add</Button>
-        </form>
-      }
-       {   this.state.relation.map((person, index) => (
+          </form>
+        }
+        {   this.state.relation.map((person, index) => (
             (this.state.tab - 1) === index &&
             <div>
-            <p>First Name: {person.first_name}</p>
-            <p>Last Name: {person.last_name}</p>
-            <p>Email: {person.email}</p>
+              <p>First Name: {person.first_name}</p>
+              <p>Last Name: {person.last_name}</p>
+              <p>Email: {person.email}</p>
             </div>
-            )
-          )
+            ))
         }
 
 

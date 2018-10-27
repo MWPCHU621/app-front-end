@@ -62,14 +62,17 @@ class Calendar extends React.Component {
 
 
 
-
   render() {
+    let addButton;
+    if(JSON.parse(localStorage.getItem('token')).role === "doctor"){
+      addButton = <Button onClick={this.createEventRouteChange} style={{border:"1px solid lightgrey", borderRadius:"2px"}}>
+        Add new Event
+      </Button>
+    }
     return(
 
       <div style={{height: '800px'}}>
-        <Button onClick={this.createEventRouteChange} style={{border:"1px solid lightgrey", borderRadius:"2px"}}>
-          Add new Event
-        </Button>
+        {addButton}
         <BigCalendar
           localizer={localizer}
           events={this.state.events}
@@ -89,6 +92,11 @@ class Calendar extends React.Component {
       </div>
     )
   }
+
+  componentDidMount() {
+
+  }
+
 }
 
 export default Calendar
