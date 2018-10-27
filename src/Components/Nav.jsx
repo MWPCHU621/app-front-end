@@ -5,11 +5,10 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-
 
 const styles = {
   root: {
@@ -24,7 +23,7 @@ const styles = {
   },
 };
 
-class ButtonAppBar extends Component {
+class Nav extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,22 +31,26 @@ class ButtonAppBar extends Component {
       show: false
     };
   }
-  logInHelper = () => {
+
+
+  render() {
+    if (this.state.redirect) {
+      return (
+        <Redirect to={this.state.redirect} />);
+    }
+    let LogBar;
     if (!this.state.userid) {
-      return (<div><Link to="/login">
+      LogBar = <div><Link to="/login">
               <Button color="inherit">Login</Button>
             </Link>
             <Link to="/register">
               <Button color="inherit">Register</Button>
-            </Link></div>)
+            </Link></div>
     } else {
-      return (<Button color="inherit" onClick={this.props.handleLogout}>Log Out</Button>)
+      LogBar = <Button color="inherit"
+      onClick={() => {this.props.handleLogout(); this.setState({redirect: '/'})}} >
+      Log Out</Button>
     }
-  }
-  componentDidMount() {
-  }
-
-  render() {
 
     const topBarContent = (<AppBar position="static">
           <Toolbar>
@@ -57,44 +60,13 @@ class ButtonAppBar extends Component {
             <Link to="/">
               <Button color="inherit">Home</Button>
             </Link>
-            { this.logInHelper() }
+            {LogBar}
           </Toolbar>
         </AppBar>)
-    const sideBarContent = (
-      <div style={{width: 120}}>
-        <List>
-          <Link to="/dashboard">
-          <ListItem button>
-              <ListItemText primary="Dashboard" />
-            </ListItem>
-          </Link>
-          <Link to="/Calendar">
-            <ListItem button>
-              <ListItemText primary="Calendar" />
-            </ListItem>
-          </Link>
-          <Link to="/messages">
-            <ListItem button>
-              <ListItemText primary="Message" />
-            </ListItem>
-          </Link>
-          <Link to="/todo">
-            <ListItem button>
-              <ListItemText primary="Task" />
-            </ListItem>
-          </Link>
-          <Link to="/search">
-            <ListItem button>
-              <ListItemText primary="search" />
-            </ListItem>
-          </Link>
-        </List>
-      </div>
-    );
+
     return (
       <div>
         {topBarContent}
-        {sideBarContent}
 
       </div>
     );
@@ -102,10 +74,10 @@ class ButtonAppBar extends Component {
   }
 }
 
-ButtonAppBar.propTypes = {
+Nav.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ButtonAppBar);
+export default withStyles(styles)(Nav);
 
 
