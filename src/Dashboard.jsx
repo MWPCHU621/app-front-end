@@ -7,6 +7,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Toolbar from '@material-ui/core/Toolbar';
+import { Redirect } from "react-router-dom";
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -37,14 +38,16 @@ export default class Dashboard extends Component {
         this.props.updateRelation(response.data.updated_relation);
         this.setState({relation: response.data.updated_relation})
       }
-
     })
-
   }
   handleChange = (event, value) => {
     this.setState({tab: value});
   }
   render() {
+    if (this.props.redirect) {
+      return (
+        <Redirect to={this.props.redirect} />);
+    }
     let tabs;
     if(JSON.parse(localStorage.getItem('token')).role === "doctor"){
       tabs = <Tabs value={this.state.tab} onChange={this.handleChange}>

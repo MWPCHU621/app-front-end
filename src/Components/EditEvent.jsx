@@ -52,6 +52,10 @@ class EditEvent extends Component {
 
   //this.props.handleRegister
   render() {
+    if (this.state.redirect) {
+      return (
+        <Redirect to={this.state.redirect} />);
+    }
     return (
       <div>
         <AppBar position="static" color="default">
