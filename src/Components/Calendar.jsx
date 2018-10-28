@@ -28,13 +28,13 @@ class Calendar extends React.Component {
     this.setState({
       show:!this.state.show,
       selectedEvent: {
-        id:e.id ? ,
-        title: e.title,
-        description: e.description,
-        start: e.start,
-        end: e.end,
-        client_id: e.client_id,
-        allday: e.allday,
+        id:e ? e.id : "",
+        title:e ? e.title : "",
+        description: e ? e.description : "",
+        start: e ? e.start : "",
+        end: e ? e.end : "",
+        client_id: e ? e.client_id : "",
+        allday: e ? e.allday : "",
       }
     })
   }

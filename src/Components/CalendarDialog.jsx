@@ -51,21 +51,18 @@ class SimpleModal extends React.Component {
     axios(option)
     .then((response) => {
       console.log(response.data)
+      window.location.reload();
       this.props.eventClickAction()
     })
   }
 
-  componentDidMount(){
-
-  }
-
   render() {
-    const { classes } = this.props;
+    const { classes, eventInfo } = this.props;
 
     if(this.state.toEdit) {
         return <Redirect to ={{
           pathname:'/calendar/edit_event',
-          state:{referrer:this.props.eventInfo},
+          state:{referrer:eventInfo},
           }} />
     }
 
@@ -88,13 +85,13 @@ class SimpleModal extends React.Component {
         >
           <div style={getModalStyle()} className={classes.paper}>
             <Typography variant="h6" id="modal-title">
-              {this.props.eventInfo.title}
+              {eventInfo.title}
             </Typography>
             <Typography variant="subtitle1" id="simple-modal-description">
-              {this.props.eventInfo.description}
+              {eventInfo.description}
             </Typography>
             <Typography variant = "subtitle1" id="simple-modal-description">
-              {this.props.eventInfo.start.toString()}
+              {eventInfo.id}
             </Typography>
             {editButton}
             {deleteButton}
