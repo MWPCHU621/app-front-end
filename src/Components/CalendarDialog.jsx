@@ -35,7 +35,6 @@ class SimpleModal extends React.Component {
 
   state = {
     toEdit:false,
-
   }
 
   redirectToEdit = () => {
@@ -43,26 +42,27 @@ class SimpleModal extends React.Component {
   }
 
   handleDelete = (e) => {
-    console.log(this.props.eventInfo);
-    const fakeID = 1
+    console.log(this.props.eventInfo.id);
     const option = {
       method: "POST",
       url: 'http://localhost:3000/api/events/destroy',
-      data: { id: fakeID }
+      data: { id: this.props.eventInfo.id }
     }
     axios(option)
     .then((response) => {
       console.log(response.data)
+      window.location.reload();
+      this.props.eventClickAction()
     })
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, eventInfo } = this.props;
 
     if(this.state.toEdit) {
         return <Redirect to ={{
           pathname:'/calendar/edit_event',
-          state:{referrer:this.props.eventInfo},
+          state:{referrer:eventInfo},
           }} />
     }
 
@@ -85,15 +85,14 @@ class SimpleModal extends React.Component {
         >
           <div style={getModalStyle()} className={classes.paper}>
             <Typography variant="h6" id="modal-title">
-              {this.props.eventInfo.title}
+              {eventInfo.title}
             </Typography>
             <Typography variant="subtitle1" id="simple-modal-description">
-              {this.props.eventInfo.description}
+              {eventInfo.description}
             </Typography>
             <Typography variant = "subtitle1" id="simple-modal-description">
-              Start Time
+              {eventInfo.id}
             </Typography>
-
             {editButton}
             {deleteButton}
             <Button onClick={this.props.eventClickAction} style={{border:"1px solid grey"}}>Close</Button>

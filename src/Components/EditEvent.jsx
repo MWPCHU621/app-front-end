@@ -9,32 +9,25 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios'
 import  { Redirect } from 'react-router-dom'
 class EditEvent extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    console.log(this.props.location.state.referrer.allday)
     this.state = {
-      title: '',
-      description: '',
-      start: '',
-      end: '',
-      allday: false,
-      patient_userid: '',
+      id:this.props.location.state ? this.props.location.state.referrer.id : "",
+      title: this.props.location.state ? this.props.location.state.referrer.title : "",
+      description: this.props.location.state ? this.props.location.state.referrer.description : "",
+      start: this.props.location.state ? this.props.location.state.referrer.start : "",
+      end: this.props.location.state ? this.props.location.state.referrer.end : "",
+      allday: this.props.location.state ? this.props.location.state.referrer.allday : false,
+      client_id: this.props.location.state ? this.props.location.state.referrer.client_id : "",
     };
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    const fakeData = {
-      id: 1,
-      title: 'test1',
-      description: 'test1',
-      start: '2018-01-01',
-      end: '2018-01-01',
-      client_id: 2,
-      doctor_id: JSON.parse(localStorage.getItem('token')).user_id
-    }
     const option = {
       method: "POST",
       url: 'http://localhost:3000/api/events/update',
-      data: { event: fakeData }
+      data: { event: this.state }
     }
     axios(option)
     .then((response) => {
@@ -49,8 +42,6 @@ class EditEvent extends Component {
 
 
 
-
-  //this.props.handleRegister
   render() {
     if (this.state.redirect) {
       return (
@@ -70,7 +61,7 @@ class EditEvent extends Component {
             label="Title"
             style={{ margin: 8 }}
             placeholder="Enter title of event"
-            value={this.props.location.state? this.props.location.state.referrer.title : ""}
+            value= {this.state.title}
             margin="normal"
             onChange={this.handleInputChange}
           />
@@ -79,7 +70,7 @@ class EditEvent extends Component {
             label="Description"
             style={{ margin: 8 }}
             placeholder="Enter description of event"
-            value={this.props.location.state ? this.props.location.state.referrer.description : ""}
+            value={this.state.description}
             margin="normal"
             onChange={this.handleInputChange}
           />
@@ -88,7 +79,7 @@ class EditEvent extends Component {
             label="Start Date"
             style={{ margin: 8 }}
             placeholder="YYYY-MM-DD"
-            value={this.props.location.state ? this.props.location.state.referrer.start : ""}
+            value={this.state.start}
             margin="normal"
             onChange={this.handleInputChange}
           />
@@ -97,27 +88,27 @@ class EditEvent extends Component {
             label="End Date"
             style={{ margin: 8 }}
             placeholder="YYYY-MM-DD"
-            value={this.props.location.state ? this.props.location.state.referrer.end : ""}
+            value={this.state.end}
             margin="normal"
             onChange={this.handleInputChange}
           />
           <InputLabel htmlFor="allday">All Day</InputLabel>
           <Select
             id="allday"
-            value={this.props.location.state ? this.props.location.state.referrer.allday : ""}
+            value={this.state.allday}
             name="allday"
             onChange={this.handleInputChange}
             style={{minWidth: 120}}
           >
-            <MenuItem value={'true'}>True</MenuItem>
-            <MenuItem value={'false'}>False</MenuItem>
+            <MenuItem value={true}>True</MenuItem>
+            <MenuItem value={false}>False</MenuItem>
           </Select>
 
-          <InputLabel htmlFor="Patient">Patient</InputLabel>
+          <InputLabel htmlFor="client">Client</InputLabel>
           <Select
-            id="patient_userid"
-            value={this.props.location.state ? this.props.location.state.referrer.patient_userid : ""}
-            name="patient_userid"
+            id="client_id"
+            value={this.state.client_id}
+            name="client_id"
             onChange={this.handleInputChange}
             style={{minWidth:120}}
           >

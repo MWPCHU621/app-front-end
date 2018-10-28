@@ -25,23 +25,26 @@ class Calendar extends React.Component {
   //handle action when an event on the calendar is click.
   //should redirect to new page to show details of the event
   eventClickAction = (e) => {
-    // let message = e.description + " at " + e.start.toDateString();
-    // // Dialog(message);
-    // alert(message);
-
     this.setState({
       show:!this.state.show,
       selectedEvent: {
-        title: e.title,
-        description: e.description,
-        start: e.start,
-        end: e.end,
+        id:e ? e.id : "",
+        title:e ? e.title : "",
+        description: e ? e.description : "",
+        start: e ? e.start : "",
+        end: e ? e.end : "",
+        client_id: e ? e.client_id : "",
+        allday: e ? e.allday : "",
       }
     })
-
-    if(this.state.show) {
-    }
   }
+
+  selectEvent= (e) => {
+    this.setState({
+
+    })
+  }
+
 
   componentDidMount() {
     const options = {
@@ -52,32 +55,8 @@ class Calendar extends React.Component {
     }
     axios(options)
     .then((response) => {
-      const fakeData = [
-      {
-        id:1,
-        start: new Date(),
-        end: new Date(moment().add(2, "days")),
-        title: "random event",
-        description: "event description",
-        doctor_id: 1,
-        client_id: 2
-      },
-      {
-        id:2,
-        start: new Date('2018-12-17'),
-        end: new Date('2018-12-18'),
-        title: 'new random event',
-        description: 'this is random event 2',
-        doctor_id: 1,
-        client_id: 2
-      }
-    ]
-
-      this.setState({events: fakeData})
+      this.setState({events: response.data.events})
     })
-
-
-
   }
 
   render() {
@@ -110,7 +89,6 @@ class Calendar extends React.Component {
       </div>
     )
   }
-
 
 
 }

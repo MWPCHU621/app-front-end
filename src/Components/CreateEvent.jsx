@@ -101,7 +101,7 @@ class CreateEvent extends Component {
             <MenuItem value={'false'}>False</MenuItem>
           </Select>
 
-          <InputLabel htmlFor="Patient">Client</InputLabel>
+          <InputLabel htmlFor="Client">Client</InputLabel>
           <Select
             id="client_id"
             value={this.state.client_id}
