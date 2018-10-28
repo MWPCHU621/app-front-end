@@ -27,7 +27,7 @@ class Login extends Component {
       if (response.status === 200) {
         const userInfo = jwt_decode(response.data.token)
         this.props.handleLogin(userInfo);
-        this.setState({redirect: "/dashboard"})
+        this.props.history.push('/dashboard')
       }
     })
   }
@@ -36,10 +36,6 @@ class Login extends Component {
   };
 
   render() {
-    if (this.state.redirect) {
-      return (
-        <Redirect to={this.state.redirect} />);
-    }
     return (
       <div>
         <AppBar position="static" color="default">

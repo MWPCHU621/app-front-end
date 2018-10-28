@@ -9,7 +9,6 @@ import { Link, Redirect } from "react-router-dom";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-
 const styles = {
   root: {
     flexGrow: 1,
@@ -48,7 +47,7 @@ class Nav extends Component {
             </Link></div>
     } else {
       LogBar = <Button color="inherit"
-      onClick={() => {this.props.handleLogout(); this.setState({redirect: '/'})}} >
+      onClick={() => { this.props.handleLogout(); }} >
       Log Out</Button>
     }
 

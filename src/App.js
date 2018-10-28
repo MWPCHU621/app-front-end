@@ -18,10 +18,11 @@ import EditEvent from  './Components/EditEvent.jsx'
 import Home from './Components/Home.jsx'
 import Todo from './Components/todo.jsx'
 import Search from './Components/Search.jsx'
-import Button from '@material-ui/core/Button';
-import { Link } from "react-router-dom";
+import createHistory from 'history/createBrowserHistory'
 
-
+const history = createHistory({
+  forceRefresh: true
+})
 class App extends Component {
   constructor() {
     super();
@@ -33,9 +34,16 @@ class App extends Component {
       relation: (localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')).relation : null),
     };
   }
-
   handleLogout = () => {
     localStorage.removeItem('token');
+    history.push('/')
+    // this.setState({
+    //   first_name: null,
+    //   last_name: null,
+    //   role: null,
+    //   userid: null,
+    //   relation: null,
+    // });
   }
   handleLogin = (userInfo) => {
     let myStorage = window.localStorage;
@@ -63,11 +71,11 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Router>
+        <Router history={history}>
           <Switch>
             <Route exact path="/" render={() => (
               <div>
-              <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
+              <Nav userid={this.state.userid} />
               <Home />
               </div>
               )}
@@ -84,34 +92,34 @@ class App extends Component {
             />
             <Route path="/register" render={() => (
               <div>
-              <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
+              <Nav userid={this.state.userid} />
               <Register /></div>)} />
-            <Route path="/login"  render={(props) => (
+            <Route path="/login"  render={() => (
               <div>
-              <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Login handleLogin={this.handleLogin} /></div>) } />
+              <Nav userid={this.state.userid} />
+              <Login history={history} handleLogin={this.handleLogin} /></div>) } />
             <Route exact path="/calendar" render={(props) => (
               <div>
-              <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
+              <Nav userid={this.state.userid} />
               <Sidebar userid={this.state.userid} />
               <Calendar relation={this.state.relation} {...props} /></div>)} />
             <Route exact path = "/calendar/create_event" component = {CreateEvent} />
             <Route exact path = "/calendar/edit_event" component={EditEvent} />
             <Route path="/messages" render={(props) => (
               <div>
-              <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
+              <Nav userid={this.state.userid} />
               <Sidebar userid={this.state.userid} />
               <ChatRoom userInfo={this.state} />
               </div>
               )} />
             <Route path="/reminder" render={(props) => (
               <div>
-              <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
+              <Nav userid={this.state.userid} />
               <Sidebar userid={this.state.userid} />
               <Todo userInfo={this.state} /> </div>)} />
             <Route exact path="/search"  render={(props) => (
               <div>
-              <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
+              <Nav userid={this.state.userid} />
               <Sidebar userid={this.state.userid} />
               <Search />
               </div> )} />

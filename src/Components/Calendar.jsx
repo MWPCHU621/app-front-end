@@ -72,15 +72,7 @@ class Calendar extends React.Component {
         client_id: 2
       }
     ]
-      // const task_list = response.data.tasks;
-      // const tasks = {};
-      // task_list.forEach((task) => {
-      //   if (!tasks[task.user_id]) {
-      //     tasks[task.user_id] = [task]
-      //   } else {
-      //     tasks[task.user_id].push(task);
-      //   }
-      // })
+
       this.setState({events: fakeData})
     })
 
