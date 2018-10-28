@@ -76,7 +76,7 @@ class App extends Component {
             <Route exact path="/dashboard" render={() => (
               <div>
               <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Sidebar userid={this.state.userid} />
+              <Sidebar />
               <Dashboard userid={this.state.userid}
               relation={this.state.relation}
               role={this.state.role} updateRelation={this.updateRelation}
@@ -94,26 +94,26 @@ class App extends Component {
             <Route exact path="/calendar" render={(props) => (
               <div>
               <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Sidebar userid={this.state.userid} />
+              <Sidebar />
               <Calendar relation={this.state.relation} {...props} /></div>)} />
             <Route exact path = "/calendar/create_event" component = {CreateEvent} />
             <Route exact path = "/calendar/edit_event" component={EditEvent} />
             <Route path="/messages" render={(props) => (
               <div>
               <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Sidebar userid={this.state.userid} />
+              <Sidebar />
               <ChatRoom userInfo={this.state} />
               </div>
               )} />
             <Route path="/reminder" render={(props) => (
               <div>
               <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Sidebar userid={this.state.userid} />
+              <Sidebar />
               <Todo userInfo={this.state} /> </div>)} />
             <Route exact path="/search"  render={(props) => (
               <div>
               <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Sidebar userid={this.state.userid} />
+              <Sidebar />
               <Search />
               </div> )} />
 
