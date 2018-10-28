@@ -57,9 +57,6 @@ class Calendar extends React.Component {
     .then((response) => {
       this.setState({events: response.data.events})
     })
-
-
-
   }
 
   render() {
@@ -92,7 +89,6 @@ class Calendar extends React.Component {
       </div>
     )
   }
-
 
 
 }
