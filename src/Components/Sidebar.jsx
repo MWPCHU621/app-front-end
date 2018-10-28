@@ -6,18 +6,18 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-const styles = {
-  root: {
-    flexGrow: 1,
-  },
-  grow: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
-};
+// const styles = {
+//   root: {
+//     flexGrow: 1,
+//   },
+//   grow: {
+//     flexGrow: 1,
+//   },
+//   menuButton: {
+//     marginLeft: -12,
+//     marginRight: 20,
+//   },
+// };
 class Sidebar extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +34,7 @@ class Sidebar extends Component {
         <Redirect to='/' />);
     }
 
-    const sideBarContent = (
+    return (
       <div style={{width: 120}}>
         <List>
           <Link to="/dashboard">
@@ -65,12 +65,6 @@ class Sidebar extends Component {
         </List>
       </div>
     );
-    return (
-      <div>
-        {sideBarContent}
-
-      </div>
-    );
 
   }
 }
@@ -79,6 +73,7 @@ Sidebar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Sidebar);
+// export default withStyles(styles)(Sidebar);
+export default Sidebar;
 
 

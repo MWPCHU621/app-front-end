@@ -7,7 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import axios from 'axios'
-import  { Redirect } from 'react-router-dom'
+
 class Register extends Component {
   constructor() {
     super();
@@ -31,8 +31,7 @@ class Register extends Component {
     axios(option)
     .then((response) => {
       console.log(response.data)
-      return <Redirect to='/'  />
-
+      this.props.history.push('/login')
     })
   }
   handleInputChange = e => {

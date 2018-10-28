@@ -4,7 +4,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import axios from 'axios'
-import  { Redirect } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 
 class Login extends Component {

@@ -6,9 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Link, Redirect } from "react-router-dom";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+
 const styles = {
   root: {
     flexGrow: 1,
@@ -47,11 +45,11 @@ class Nav extends Component {
             </Link></div>
     } else {
       LogBar = <Button color="inherit"
-      onClick={() => { this.props.handleLogout(); }} >
-      Log Out</Button>
+      onClick={this.props.handleLogout} >Log Out</Button>
     }
 
-    const topBarContent = (<AppBar position="static">
+    return (
+      <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" color="inherit">
               Back on Track
@@ -61,13 +59,7 @@ class Nav extends Component {
             </Link>
             {LogBar}
           </Toolbar>
-        </AppBar>)
-
-    return (
-      <div>
-        {topBarContent}
-
-      </div>
+        </AppBar>
     );
 
   }
