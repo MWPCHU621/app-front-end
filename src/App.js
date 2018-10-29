@@ -36,9 +36,7 @@ class App extends Component {
       messages: {},
     };
   }
-  componentDidmount() {
 
-  }
   handleLogout = () => {
     localStorage.removeItem('token');
     history.push('/');
@@ -70,7 +68,6 @@ class App extends Component {
   }
 
   render() {
-    let count = 0;
     if (this.state.userid) {
       if (!this.socket) {
         this.socket = new WebSocket("ws://localhost:3003");
@@ -104,7 +101,11 @@ class App extends Component {
               messages[received.sender_id].push(received);
               this.setState({messages: messages});
             }
-            this.setState({notification: ++count}); /////
+            console.log('app mount', history.location.pathname)
+            if (history.location.pathname !== '/messages') {
+              this.setState({notification: ++this.state.notification});
+            }
+
           }
         }
       };

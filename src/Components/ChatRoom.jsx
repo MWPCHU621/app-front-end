@@ -85,10 +85,14 @@ export default class ChatRoom extends Component {
   handleChange = (event, value) => {
     this.setState({tab: value});
   }
-  message_helper = (person) => {
-    return this.props.messages[person.id] ? this.props.messages[person.id] : []
-  }
+
   render() {
+    let message_display_helper =
+      this.state.relation.map((person, index) => (
+            this.state.tab === index &&  <Messages messages={this.props.messages[person.id] ? this.props.messages[person.id] : []} id={person.id}/>
+            )
+          )
+
     const chat = <div>
         <AppBar position="static" color="default">
           <Toolbar>
@@ -105,12 +109,7 @@ export default class ChatRoom extends Component {
           }
           </Tabs>
         </AppBar>
-        {
-          this.state.relation.map((person, index) => (
-            this.state.tab === index &&  <Messages messages={this.message_helper(person)} id={person.id}/>
-            )
-          )
-        }
+        {message_display_helper}
         <ChatBar sendMsg={this.sendMsg} />
       </div>
     return (<React.Fragment>{chat}</React.Fragment>);
