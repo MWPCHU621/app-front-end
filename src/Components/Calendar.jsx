@@ -1,19 +1,21 @@
-import React from 'react'
+import React, {Component} from 'react'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import "react-big-calendar/lib/css/react-big-calendar.css"
 import CalendarDialog from './CalendarDialog.jsx'
 import Button from '@material-ui/core/Button';
 import axios from 'axios'
-const localizer = BigCalendar.momentLocalizer(moment)
 
+const localizer = BigCalendar.momentLocalizer(moment);
 
-
-class Calendar extends React.Component {
-  state = {
-    events: [],
-    show: false,
-    selectedEvent: {},
+class Calendar extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      events: [],
+      show: false,
+      selectedEvent: {},
+    }
   }
 
   //redirection to create new event page.
@@ -39,11 +41,6 @@ class Calendar extends React.Component {
     })
   }
 
-  selectEvent= (e) => {
-    this.setState({
-
-    })
-  }
 
 
   componentDidMount() {
@@ -55,7 +52,11 @@ class Calendar extends React.Component {
     }
     axios(options)
     .then((response) => {
-      this.setState({events: response.data.events})
+      this.setState({events: response.data.events.map((event) =>({
+        ...event,
+        end:moment(event.end).toDate(),
+        start:moment(event.start).toDate(),
+      }))})
     })
   }
 
@@ -76,6 +77,7 @@ class Calendar extends React.Component {
           startAccessor="start"
           endAccessor="end"
           onSelectEvent={this.eventClickAction}
+          length={60}
         />
         <div>
           {this.state.show ?

@@ -19,6 +19,8 @@ export default class ChatRoom extends Component {
       // count: 0,
     }
   }
+
+
    componentDidMount() {
     let count = 0;
     console.log("chat room did mount ")
