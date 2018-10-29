@@ -25,7 +25,9 @@ class Sidebar extends Component {
       userid: props.userid,
     };
   }
-
+  navigate = (url) => {
+      this.props.history.push(url)
+    }
   render() {
     let messageBar;
     if (this.props.notification === 0) { //|| this.props.history.location.pathname === '/messages'
@@ -35,34 +37,27 @@ class Sidebar extends Component {
               </ListItem>
             </Link>
     } else {
-       messageBar = <Link to="/messages">
-              <ListItem button>
+       messageBar =
+              <ListItem button onClick={() => this.navigate('/messages')}>
                <Badge color="primary" badgeContent={this.props.notification} >
                 <ListItemText primary="Message" />
                 </Badge>
               </ListItem>
-            </Link>
     }
 
     return (
       <div style={{width: 120}}>
         <List>
-          <Link to="/dashboard">
-          <ListItem button>
+          <ListItem button onClick={() => this.navigate('/dashboard')} >
               <ListItemText primary="Dashboard" />
             </ListItem>
-          </Link>
-          <Link to="/Calendar">
-            <ListItem button>
+            <ListItem button onClick={() => this.navigate('/calendar')}>
               <ListItemText primary="Calendar" />
             </ListItem>
-          </Link>
           {messageBar}
-          <Link to="/reminder">
-            <ListItem button>
+            <ListItem button onClick={() => this.navigate('/reminder')}>
               <ListItemText primary="Reminder" />
             </ListItem>
-          </Link>
         </List>
       </div>
     );
