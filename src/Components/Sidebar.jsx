@@ -1,33 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-<<<<<<< HEAD
-import { Link, Redirect } from "react-router-dom";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-
-import '../Style/sidebar.css'
-
-=======
-// import { withStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Badge from '@material-ui/core/Badge';
-// const styles = {
-//   root: {
-//     flexGrow: 1,
-//   },
-//   grow: {
-//     flexGrow: 1,
-//   },
-//   menuButton: {
-//     marginLeft: -12,
-//     marginRight: 20,
-//   },
-// };
->>>>>>> b80e36ad3142ad2473bd848a112b7ffa3fc0743e
+
 class Sidebar extends Component {
   constructor(props) {
     super(props);
