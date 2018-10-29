@@ -91,7 +91,10 @@ class SimpleModal extends React.Component {
               {eventInfo.description}
             </Typography>
             <Typography variant = "subtitle1" id="simple-modal-description">
-              {eventInfo.id}
+              Start: {eventInfo.start.toString().substring(0,15)}
+            </Typography>
+            <Typography variant = "subtitle1" id="simple-modal-description">
+              End: {eventInfo.end.toString().substring(0,15)}
             </Typography>
             {editButton}
             {deleteButton}

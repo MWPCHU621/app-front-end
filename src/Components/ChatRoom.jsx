@@ -16,6 +16,8 @@ export default class ChatRoom extends Component {
       tab: 0
     }
   }
+
+
    componentDidMount() {
     this.socket = new WebSocket("ws://localhost:3003");
     this.socket.onopen =  (event) => {

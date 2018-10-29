@@ -38,13 +38,13 @@ class Nav extends Component {
     let LogBar;
     if (!this.state.userid) {
       LogBar = <div><Link to="/login">
-              <Button color="inherit">Login</Button>
+              <Button style={{color:"white", textDecoration:"none"}}>Login</Button>
             </Link>
             <Link to="/register">
-              <Button color="inherit">Register</Button>
+              <Button style={{color:"white", textDecoration:"none"}}>Register</Button>
             </Link></div>
     } else {
-      LogBar = <Button color="inherit"
+      LogBar = <Button style={{color:"white", textDecoration:"none"}}
       onClick={this.props.handleLogout} >Log Out</Button>
     }
 
@@ -55,7 +55,7 @@ class Nav extends Component {
               Back on Track
             </Typography>
             <Link to="/">
-              <Button color="inherit">Home</Button>
+              <Button style={{color:"white", textDecoration:"none"}}>Home</Button>
             </Link>
             {LogBar}
           </Toolbar>

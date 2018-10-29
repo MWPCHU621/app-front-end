@@ -95,6 +95,8 @@ class Todo extends Component {
             margin="normal"
             value={this.state.new_content}
             onChange={this.handleInputChange}
+            multiline={true}
+            rowsMax={5}
           />
         </TableCell>
         <TableCell></TableCell>

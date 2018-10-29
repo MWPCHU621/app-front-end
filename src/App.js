@@ -20,6 +20,7 @@ import Todo from './Components/todo.jsx'
 import Search from './Components/Search.jsx'
 import createHistory from 'history/createBrowserHistory'
 
+
 const history = createHistory({
   forceRefresh: true
 })
@@ -69,6 +70,7 @@ class App extends Component {
             <Route exact path="/" render={() => (
               <div>
               <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
+              <Sidebar  style={{float:"left"}}/>
               <Home />
               </div>
               )}
@@ -76,7 +78,7 @@ class App extends Component {
             <Route exact path="/dashboard" render={() => (
               <div>
               <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Sidebar />
+              <Sidebar style={{float:"left"}}/>
               <Dashboard userid={this.state.userid}
               relation={this.state.relation}
               role={this.state.role} updateRelation={this.updateRelation}
@@ -101,7 +103,7 @@ class App extends Component {
             <Route path="/messages" render={(props) => (
               <div>
               <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Sidebar />
+              <Sidebar style={{float:"left"}}/>
               <ChatRoom userInfo={this.state} />
               </div>
               )} />
