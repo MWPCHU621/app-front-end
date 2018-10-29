@@ -72,7 +72,9 @@ class Todo extends Component {
   handleInputChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  add_helper = (person) => {
+  add_helper = (props) => {
+    const person = props.person;
+    if (JSON.parse(localStorage.getItem('token')).role === "doctor") {
     return (
       <TableRow>
         <TableCell>
@@ -99,13 +101,13 @@ class Todo extends Component {
             rowsMax={5}
           />
         </TableCell>
-        <TableCell></TableCell>
         <TableCell>
           <Button variant="fab" color="primary" aria-label="Add" onClick={() => this.handleClick(person)}>
             <AddIcon />
           </Button>
         </TableCell>
       </TableRow>)
+  }
   }
   render() {
 

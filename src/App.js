@@ -33,8 +33,11 @@ class App extends Component {
       role: (localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')).role : null),
       userid: (localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')).user_id : null),
       relation: (localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')).relation : null),
+      notification: 0,
+      messages: {},
     };
   }
+
   handleLogout = () => {
     localStorage.removeItem('token');
     history.push('/');
@@ -61,8 +64,54 @@ class App extends Component {
     let myStorage = window.localStorage;
     myStorage.setItem("token", JSON.stringify(token))
   }
+  reset_notification_helper = (notification) => {
+    this.setState({notification: 0});
+  }
 
   render() {
+    if (this.state.userid) {
+      if (!this.socket) {
+        this.socket = new WebSocket("ws://localhost:3003");
+      }
+
+      this.socket.onopen =  (event) => {
+        console.log("app render WebSocket")
+        this.socket.send(this.state.userid);
+        this.socket.onmessage = (event) => {
+          console.log("event.data",event.data);
+          const received = JSON.parse(event.data);
+
+          if (received.sender_id === this.state.userid) { //if this is the message I sent
+            if (!this.state.messages[received.recipient_id]) {
+              let messages = this.state.messages
+              messages[received.recipient_id] = [received]
+              this.setState({messages: messages});
+            } else {
+              let messages = this.state.messages
+              messages[received.recipient_id].push(received);
+              this.setState({messages: messages});
+            }
+          } else { //someone send me message
+
+            if (!this.state.messages[received.sender_id]) {
+              let messages = this.state.messages
+              messages[received.sender_id] = [received]
+              this.setState({messages: messages});
+            } else {
+              let messages = this.state.messages
+              messages[received.sender_id].push(received);
+              this.setState({messages: messages});
+            }
+            console.log('app mount', history.location.pathname)
+            if (history.location.pathname !== '/messages') {
+              this.setState({notification: ++this.state.notification});
+            }
+
+          }
+        }
+      };
+    }
+
     return (
       <div>
         <Router>
@@ -78,7 +127,7 @@ class App extends Component {
             <Route exact path="/dashboard" render={() => (
               <div>
               <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Sidebar style={{float:"left"}}/>
+              <Sidebar history={history} notification={this.state.notification} />
               <Dashboard userid={this.state.userid}
               relation={this.state.relation}
               role={this.state.role} updateRelation={this.updateRelation}
@@ -96,28 +145,25 @@ class App extends Component {
             <Route exact path="/calendar" render={(props) => (
               <div>
               <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Sidebar />
+              <Sidebar history={history} notification={this.state.notification} />
               <Calendar relation={this.state.relation} {...props} /></div>)} />
             <Route exact path = "/calendar/create_event" component = {CreateEvent} />
             <Route exact path = "/calendar/edit_event" component={EditEvent} />
             <Route path="/messages" render={(props) => (
               <div>
               <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Sidebar style={{float:"left"}}/>
-              <ChatRoom userInfo={this.state} />
+              <Sidebar history={history} notification={this.state.notification} />
+              <ChatRoom history={history}
+              reset_notification_helper={this.reset_notification_helper}
+              messages={this.state.messages} userInfo={this.state} />
               </div>
               )} />
             <Route path="/reminder" render={(props) => (
               <div>
               <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Sidebar />
+              <Sidebar history={history} notification={this.state.notification} />
               <Todo userInfo={this.state} /> </div>)} />
-            <Route exact path="/search"  render={(props) => (
-              <div>
-              <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Sidebar />
-              <Search />
-              </div> )} />
+
 
           </Switch>
         </Router>

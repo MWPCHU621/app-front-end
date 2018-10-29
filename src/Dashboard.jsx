@@ -7,7 +7,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Toolbar from '@material-ui/core/Toolbar';
-import { Redirect } from "react-router-dom";
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -44,12 +43,9 @@ export default class Dashboard extends Component {
     this.setState({tab: value});
   }
   render() {
-    if (this.props.redirect) {
-      return (
-        <Redirect to={this.props.redirect} />);
-    }
     let tabs;
-    if(JSON.parse(localStorage.getItem('token')).role === "doctor"){
+    let addClient;
+    if (JSON.parse(localStorage.getItem('token')).role === "doctor") {
       tabs = <Tabs value={this.state.tab} onChange={this.handleChange}>
       <Tab label="New Client" />
       {
@@ -58,17 +54,8 @@ export default class Dashboard extends Component {
         ))
       }
       </Tabs>
-    }
-    return (
-      <div>
-      <AppBar position="static" color="default">
-          <Toolbar>
-              Dashboard
-          </Toolbar>
-        </AppBar>
-        <AppBar position="static">
-          {tabs}
-        </AppBar>
+
+      addClient = <div>
         {
           this.state.tab === 0 &&
           <form onSubmit={this.handleSubmit}>
@@ -92,12 +79,25 @@ export default class Dashboard extends Component {
             </div>
             ))
         }
+      </div>
+    }
+
+    return (
+      <div>
+      <AppBar position="static" color="default">
+          <Toolbar>
+              Dashboard
+          </Toolbar>
+        </AppBar>
+
+        <AppBar position="static">
+          {tabs}
+        </AppBar>
+        {addClient}
 
 
-        <List>
 
-
-        </List>
+        <h>Welcome Back! {JSON.parse(localStorage.getItem('token')).first_name}</h>
 
       </div>
     );

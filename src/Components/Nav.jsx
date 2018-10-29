@@ -5,7 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const styles = {
   root: {
@@ -31,10 +31,6 @@ class Nav extends Component {
 
 
   render() {
-    if (this.state.redirect) {
-      return (
-        <Redirect to={this.state.redirect} />);
-    }
     let LogBar;
     if (!this.state.userid) {
       LogBar = <div><Link to="/login">

@@ -25,9 +25,11 @@ wss.on('connection', (ws) => {
       myConnections[message] = ws;
     } else {
       const msg = JSON.parse(message);
-      let recipient_ws = myConnections[msg.sender_id];
-      recipient_ws.send(JSON.stringify(msg));
-      myConnections[msg.recipient_id].send(JSON.stringify(msg));
+      myConnections[msg.sender_id].send(JSON.stringify(msg));
+      if (myConnections[msg.recipient_id]) {
+        myConnections[msg.recipient_id].send(JSON.stringify(msg));
+      }
+
     }
   });
 
