@@ -57,8 +57,8 @@ export default class Messages extends Component {
     })
     return (
       <React.Fragment>
-      <div  className="messages">{messageRender_database}</div>
-      <div  className="messages">{messageRender}</div>
+      <div className="messages">{messageRender_database}</div>
+      <div className="messages">{messageRender}</div>
       </React.Fragment>
     );
   }

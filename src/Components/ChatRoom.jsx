@@ -25,7 +25,9 @@ export default class ChatRoom extends Component {
     let count = 0;
     console.log("chat room did mount ")
     console.log(this.props.history.location.pathname) // === '/messages'
-    this.props.reset_notification_helper();
+    // if (this.tab === this.props.messages.sender_id) {
+    //   this.props.reset_notification_helper();
+    // }
     // this.socket = new WebSocket("ws://localhost:3003");
     // this.socket.onopen =  (event) => {
     //   this.socket.send(this.state.userid);

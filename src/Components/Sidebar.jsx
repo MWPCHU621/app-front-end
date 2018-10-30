@@ -18,12 +18,12 @@ class Sidebar extends Component {
     }
   render() {
     let messageBar;
-    if (this.props.notification === 0) { //|| this.props.history.location.pathname === '/messages'
-       messageBar = <Link to="/messages">
-              <ListItem button>
+    if (this.props.notification === 0) {
+       messageBar =
+              <ListItem button onClick={() => this.navigate('/messages')}>
                 <ListItemText primary="Message" />
               </ListItem>
-            </Link>
+
     } else {
        messageBar =
               <ListItem button onClick={() => this.navigate('/messages')}>
@@ -36,16 +36,22 @@ class Sidebar extends Component {
     return (
       <div className="sidebar" style={{width: 120}}>
         <List>
-          <ListItem button onClick={() => this.navigate('/dashboard')} >
+        <Link to="/dashboard">
+          <ListItem button>
               <ListItemText primary="Dashboard" />
             </ListItem>
-            <ListItem button onClick={() => this.navigate('/calendar')}>
+          </Link>
+          <Link to="/calendar">
+            <ListItem button>
               <ListItemText primary="Calendar" />
             </ListItem>
+          </Link>
           {messageBar}
-            <ListItem button onClick={() => this.navigate('/reminder')}>
+          <Link to="/reminder">
+            <ListItem button>
               <ListItemText primary="Reminder" />
             </ListItem>
+          </Link>
         </List>
       </div>
     );

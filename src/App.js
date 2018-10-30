@@ -19,7 +19,7 @@ import Home from './Components/Home.jsx'
 import Todo from './Components/todo.jsx'
 import Search from './Components/Search.jsx'
 import createHistory from 'history/createBrowserHistory'
-
+import axios from 'axios'
 
 const history = createHistory({
   forceRefresh: true
@@ -37,7 +37,28 @@ class App extends Component {
       messages: {},
     };
   }
+  componentDidMount() {
+    if (this.state.role === 'client') {
+      const option = {
+        method: "GET",
+        url: 'http://localhost:3000/api/sessions/update',
+        params: {id: this.state.userid}
+      }
+      axios(option)
+      .then((response) => {
+        console.log(response.data.updated_relation)
+        if (response.status === 200) {
+          let token = JSON.parse(localStorage.getItem('token'));
+          localStorage.removeItem('token');
+          token.relation = response.data.updated_relation;
+          let myStorage = window.localStorage;
+          myStorage.setItem("token", JSON.stringify(token))
+          this.setState({relation: response.data.updated_relation})
+        }
+      })
+    }
 
+  }
   handleLogout = () => {
     localStorage.removeItem('token');
     history.push('/');
@@ -64,9 +85,9 @@ class App extends Component {
     let myStorage = window.localStorage;
     myStorage.setItem("token", JSON.stringify(token))
   }
-  reset_notification_helper = (notification) => {
-    this.setState({notification: 0});
-  }
+  // reset_notification_helper = (notification) => {
+  //   this.setState({notification: 0});
+  // }
 
   render() {
     if (this.state.userid) {
@@ -102,10 +123,9 @@ class App extends Component {
               messages[received.sender_id].push(received);
               this.setState({messages: messages});
             }
-            console.log('app mount', history.location.pathname)
-            if (history.location.pathname !== '/messages') {
+            // console.log('app mount', history.location.pathname)
+            // if (history.location.pathname !== '/messages') {
               this.setState({notification: ++this.state.notification});
-            }
 
           }
         }
