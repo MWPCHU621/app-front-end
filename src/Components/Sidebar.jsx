@@ -51,6 +51,11 @@ class Sidebar extends Component {
               <ListItemText primary="Reminder" />
             </ListItem>
           </Link>
+          <Link to="/nutrition">
+            <ListItem button>
+              <ListItemText primary="Nutrition" />
+            </ListItem>
+          </Link>
         </List>
       </div>
     );

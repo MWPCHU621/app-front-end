@@ -41,7 +41,7 @@ class Todo extends Component {
       const reminders = response.data.reminders;
       console.log(response.data.reminders)
       const tasks = {};
-      if (this.state.role != 'client') {
+      if (this.state.role !== 'client') {
         reminders.forEach((task) => {
           if (!tasks[task.client_id]) {
             tasks[task.client_id] = [task]
