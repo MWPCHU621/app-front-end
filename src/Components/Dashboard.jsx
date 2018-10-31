@@ -98,7 +98,7 @@ export default class Dashboard extends Component {
         <AppBar position="static">
           {tabs}
         </AppBar>
-        <h1 className='dashboard_greeting'>Welcome Back! Dr. {JSON.parse(localStorage.getItem('token')).first_name}</h1>
+        <h1 className='dashboard_greeting'>Welcome Back! {JSON.parse(localStorage.getItem('token')).first_name}</h1>
         {addClient}
       </div>
     );

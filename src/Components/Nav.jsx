@@ -29,6 +29,7 @@ class Nav extends Component {
       show: false
     };
   }
+  // <div>{JSON.parse(localStorage.getItem('token')).first_name}</div>
 
 
   render() {
@@ -43,7 +44,7 @@ class Nav extends Component {
     } else {
       LogBar = <React.Fragment><Button style={{color:"white", textDecoration:"none"}}
       onClick={this.props.handleLogout} >Log Out</Button>
-      <div>{JSON.parse(localStorage.getItem('token')).first_name}</div>
+
       </React.Fragment>
     }
 

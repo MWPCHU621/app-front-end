@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import axios from 'axios'
-import InputAdornment from '@material-ui/core/InputAdornment';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import CloseIcon from '@material-ui/icons/Close';
@@ -59,6 +58,9 @@ class SimpleModal extends React.Component {
     })
   }
 
+  //onclick action for when slots are pressed.
+  // onClick={this.props.eventClickAction}
+
   render() {
     const { classes, eventInfo } = this.props;
 
@@ -108,7 +110,7 @@ class SimpleModal extends React.Component {
             <div className='modal-btnContainer'>
               {editButton}
               {deleteButton}
-              <Button onClick={this.props.eventClickAction} className='modal-btn'>
+              <Button className='modal-btn'>
                   Close
                   <CloseIcon className='leftIcon' />
               </Button>

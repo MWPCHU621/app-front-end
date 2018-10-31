@@ -63,7 +63,7 @@ class Calendar extends Component {
 
   render() {
     let addButton;
-    if(JSON.parse(localStorage.getItem('token')).role === "doctor"){
+    if(JSON.parse(localStorage.getItem('token')).role !== "client"){
       addButton = <Button
         onClick={this.createEventRouteChange}
         style={{border:"1px solid lightgrey", borderRadius:"2px"}}

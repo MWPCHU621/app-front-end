@@ -12,7 +12,7 @@ import axios from 'axios'
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import DeleteIcon from '@material-ui/icons/Delete';
+// import DeleteIcon from '@material-ui/icons/Delete';
 class Nutrition extends Component {
   constructor(props) {
     super(props);
