@@ -22,6 +22,7 @@ class Nutrition extends Component {
       relation: props.userInfo.relation,
       tab: 0,
       foods: [],
+      list_client_foods: {},
       new_food: '',
     }
   }
@@ -42,7 +43,18 @@ class Nutrition extends Component {
     }
     axios(options)
     .then((response) => {
-      console.log(response.data)
+      console.log(response.data.foods)
+      if (this.state.role === 'client') {
+        this.setState({foods: response.data.foods})
+      } else {
+        response.data.foods.forEach((food) => {
+          if (!this.list_client_foods[food.user_id]) {
+            this.list_client_foods[food.user_id] = [food]
+          } else {
+            this.list_client_foods[food.user_id].push(food);
+          }
+        })
+      }
     })
   }
 
@@ -125,11 +137,14 @@ class Nutrition extends Component {
   //     )
   // }
 
-
+  list_client_foods_helper = (person) => {
+    return this.list_client_foods[person.id]? this.list_client_foods[person.id] : [];
+  }
   render() {
-    let add_food
+    let table
     if (this.state.role === 'client') {
-      add_food = <TableRow><TableCell>
+      table = <TableBody>
+      <TableRow><TableCell>
                 <TextField
                   name = "new_food"
                   label="New Food"
@@ -145,7 +160,56 @@ class Nutrition extends Component {
                   <AddIcon />
                 </Button></TableCell>
                 </TableRow>
+                {this.state.foods.map((food, index) => (
+                    <TableRow key={index}>
+                    <TableCell>{food.name}</TableCell>
+                    <TableCell>{food.quantity}</TableCell>
+                    <TableCell>{food.serving_size}</TableCell>
+                    <TableCell>{food.calories}</TableCell>
+                    <TableCell>{food.carbohydrates}</TableCell>
+                    <TableCell>{food.protein}</TableCell>
+                    <TableCell>{food.fat}</TableCell>
+                    </TableRow>
+                  ))
+              }
+                </TableBody>
+
+    } else {
+      table = this.state.relation.map((person, index) => (
+            this.state.tab === index &&
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Quantity</TableCell>
+                  <TableCell>Serving Size (g)</TableCell>
+                  <TableCell>Calories</TableCell>
+                  <TableCell>Carbohydrates (g)</TableCell>
+                  <TableCell>Protein (g)</TableCell>
+                  <TableCell>Fat (g)</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+              { this.state.list_client_foods_helper(person).map((food, index) => (
+                    <TableRow key={index}>
+                    <TableCell>{food.name}</TableCell>
+                    <TableCell>{food.quantity}</TableCell>
+                    <TableCell>{food.serving_size}</TableCell>
+                    <TableCell>{food.calories}</TableCell>
+                    <TableCell>{food.carbohydrates}</TableCell>
+                    <TableCell>{food.protein}</TableCell>
+                    <TableCell>{food.fat}</TableCell>
+                    </TableRow>
+                  ))
             }
+              </TableBody>
+
+            </Table>
+            )
+          )
+
+    }
+
     return (
       <div>
         <AppBar position="static" color="default">
@@ -163,41 +227,7 @@ class Nutrition extends Component {
           }
           </Tabs>
         </AppBar>
-        {
-          this.state.relation.map((person, index) => (
-            this.state.tab === index &&
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Quantity</TableCell>
-                  <TableCell>Serving Size (g)</TableCell>
-                  <TableCell>Calories</TableCell>
-                  <TableCell>Carbohydrates (g)</TableCell>
-                  <TableCell>Protein (g)</TableCell>
-                  <TableCell>Fat (g)</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-              {add_food}
-                {
-                  this.state.foods.map((food, index) => (
-                    <TableRow key={index}>
-                    <TableCell>{food.name}</TableCell>
-                    <TableCell>{food.quantity}</TableCell>
-                    <TableCell>{food.serving_size}</TableCell>
-                    <TableCell>{food.calories}</TableCell>
-                    <TableCell>{food.carbohydrates}</TableCell>
-                    <TableCell>{food.protein}</TableCell>
-                    <TableCell>{food.fat}</TableCell>
-                    </TableRow>
-                  ))
-                }
-              </TableBody>
-            </Table>
-            )
-          )
-        }
+        {table}
       </div>
     );
   }
