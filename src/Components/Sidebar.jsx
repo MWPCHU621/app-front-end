@@ -64,9 +64,11 @@ class Sidebar extends Component {
               <ListItem button  onClick={() => this.navigate('/reminder')}>
                 <ListItemText primary="Reminder" />
               </ListItem>
+              <Divider/>
               <ListItem button onClick={() => this.navigate('/nutrition')}>
                 <ListItemText primary="Nutrition" />
               </ListItem>
+              <Divider/>
               <ListItem button onClick={() => this.navigate('/exercise')}>
                 <ListItemText primary="Exercise" />
               </ListItem>

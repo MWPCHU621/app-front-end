@@ -20,10 +20,6 @@ export default class ChatRoom extends Component {
     }
   }
 
-   componentDidMount() {
-    this.props.reset_notification_helper();
-   }
-
   sendMsg = (text) => {
     const newMessage = {
       sender_id: this.state.userid,

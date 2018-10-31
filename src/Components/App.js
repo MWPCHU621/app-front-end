@@ -86,9 +86,6 @@ class App extends Component {
     let myStorage = window.localStorage;
     myStorage.setItem("token", JSON.stringify(token))
   }
-  reset_notification_helper = (notification) => {
-    this.setState({notification: 0});
-  }
 
   render() {
     if (this.state.userid) {
@@ -184,8 +181,7 @@ class App extends Component {
                   <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
                 <div className="app_mainContent" >
                   <ChatRoom history={history}
-                  messages={this.state.messages} userInfo={this.state}
-                  reset_notification_helper={this.reset_notification_helper} />
+                  messages={this.state.messages} userInfo={this.state} />
                 </div>
               </div>)} />
             <Route path="/reminder" render={(props) => (
