@@ -18,6 +18,7 @@ import EditEvent from  './Components/EditEvent.jsx'
 import Home from './Components/Home.jsx'
 import Todo from './Components/todo.jsx'
 import Nutrition from './Components/nutrition/nutrition.jsx'
+import Exercise from './Components/nutrition/exercise.jsx'
 import createHistory from 'history/createBrowserHistory'
 import axios from 'axios'
 
@@ -183,6 +184,11 @@ class App extends Component {
               <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
               <Sidebar history={history} notification={this.state.notification} />
               <Nutrition userInfo={this.state} /> </div>)} />
+            <Route path="/exercise" render={(props) => (
+              <div>
+              <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
+              <Sidebar history={history} notification={this.state.notification} />
+              <Exercise userInfo={this.state} /> </div>)} />
 
 
           </Switch>
