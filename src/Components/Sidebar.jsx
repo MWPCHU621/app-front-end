@@ -75,6 +75,11 @@ class Sidebar extends Component {
                 <ListItemText primary="Nutrition" />
               </ListItem>
             </Link>
+            <Link to="/exercise">
+              <ListItem button>
+                <ListItemText primary="Exercise" />
+              </ListItem>
+            </Link>
           </List>
         </div>
       </Drawer>

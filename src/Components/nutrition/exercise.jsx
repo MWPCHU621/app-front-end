@@ -12,7 +12,7 @@ import axios from 'axios'
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-// import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from '@material-ui/icons/Delete';
 class Nutrition extends Component {
   constructor(props) {
     super(props);
@@ -21,8 +21,8 @@ class Nutrition extends Component {
       role: props.userInfo.role,
       relation: props.userInfo.relation,
       tab: 0,
-      foods: [],
-      new_food: '',
+      exercises: [],
+      new_exercise: '',
     }
   }
   handleChange = (event, value) => {
@@ -64,7 +64,7 @@ class Nutrition extends Component {
   handleClick = () => {
     const options = {
       method: "POST",
-      url: 'https://trackapi.nutritionix.com/v2/natural/nutrients',
+      url: 'https://trackapi.nutritionix.com/v2/natural/exercise',
       headers: {
         'x-app-id': '6f20e60a',
         'x-app-key': '8c1c3fc675791ad02e8e5718aa3847cc',
@@ -72,40 +72,39 @@ class Nutrition extends Component {
         'Content-Type': 'application/json',
       },
       data: {
-        query: this.state.new_food,
-        timezone: "US/Eastern"
+        query: 'running',//this.state.new_exercise,
+        "gender":"female",
+         "weight_kg":72.5,
+         "height_cm":167.64,
+         "age": 24
       }
     }
 
     this.setState({new_food: ''})
     axios(options)
     .then((response) => {
-      console.log(response.data.foods)
+      console.log(response.data.exercises)
       if (response.data) {
-        let newfood = response.data.foods.map(food => {
+        let newexercise = response.data.exercises.map(exercise => {
           let modified = {};
           modified.user_id = this.state.userid
-          modified.name = food.name
-          modified.quantity = food.serving_qty
-          modified.serving_size = food.serving_weight_grams
-          modified.calories = food.nf_calories
-          modified.carbohydrates = food.nf_total_carbohydrate
-          modified.protein = food.nf_protein
-          modified.fat = food.nf_total_fat;
+          modified.name = exercise.name
+          modified.calories = exercise.nf_calories
+          modified.duration = exercise.duration_min
           return modified;
         })
         const option = {
           method: "POST",
-          url: 'http://localhost:3000/api/nutritions/create',
+          url: 'http://localhost:3000/api/exercises/create',
           data: {
-            newfood: newfood,
+            exercise: newexercise,
           }
         }
         axios(option)
         .then((response) => {
-          const foods = this.state.foods;
-          foods = foods.concat(response.data.foods)
-          this.setState({foods: foods})
+          const exercises = this.state.exercises;
+          exercises = exercises.concat(response.data.exercises)
+          this.setState({exercises: exercises})
         })
       }
     })
@@ -131,12 +130,12 @@ class Nutrition extends Component {
     if (this.state.role === 'client') {
       add_food = <TableRow><TableCell>
                 <TextField
-                  name = "new_food"
-                  label="New Food"
+                  name = "new_exercise"
+                  label="New Exercise"
                   style={{ margin: 8 }}
-                  placeholder="Enter Food Query, ex. for breakfast I ate 2 eggs, bacon, and french toast"
+                  placeholder="Enter Exercise Query, ex. ran 3 miles"
                   margin="normal"
-                  value={this.state.new_food}
+                  value={this.state.new_exercise}
                   onChange={this.handleInputChange}
                 />
               </TableCell>
@@ -181,15 +180,15 @@ class Nutrition extends Component {
               <TableBody>
               {add_food}
                 {
-                  this.state.foods.map((food, index) => (
+                  this.state.exercises.map((food, index) => (
                     <TableRow key={index}>
-                    <TableCell>{food.name}</TableCell>
-                    <TableCell>{food.quantity}</TableCell>
-                    <TableCell>{food.serving_size}</TableCell>
-                    <TableCell>{food.calories}</TableCell>
-                    <TableCell>{food.carbohydrates}</TableCell>
-                    <TableCell>{food.protein}</TableCell>
-                    <TableCell>{food.fat}</TableCell>
+                    <TableCell>{food.food_name}</TableCell>
+                    <TableCell>{food.serving_qty}</TableCell>
+                    <TableCell>{food.serving_weight_grams}</TableCell>
+                    <TableCell>{food.nf_calories}</TableCell>
+                    <TableCell>{food.nf_total_carbohydrate}</TableCell>
+                    <TableCell>{food.nf_protein}</TableCell>
+                    <TableCell>{food.nf_total_fat}</TableCell>
                     </TableRow>
                   ))
                 }

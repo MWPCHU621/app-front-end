@@ -17,6 +17,7 @@ import EditEvent from  './EditEvent.jsx'
 import Home from './Home.jsx'
 import Todo from './todo.jsx'
 import Nutrition from './nutrition/nutrition.jsx'
+import Exercise from './Components/nutrition/exercise.jsx'
 // import Search from './Search.jsx'
 
 import createHistory from 'history/createBrowserHistory'
@@ -193,12 +194,25 @@ class App extends Component {
               </div>)} />
             <Route path="/nutrition" render={(props) => (
               <div>
+<<<<<<< HEAD:src/Components/App.js
                 <Sidebar history={history} notification={this.state.notification} />
                 <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
                 <div className="app_mainContent">
                   <Nutrition userInfo={this.state} />
                 </div>
               </div>)} />
+=======
+              <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
+              <Sidebar history={history} notification={this.state.notification} />
+              <Nutrition userInfo={this.state} /> </div>)} />
+            <Route path="/exercise" render={(props) => (
+              <div>
+              <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
+              <Sidebar history={history} notification={this.state.notification} />
+              <Exercise userInfo={this.state} /> </div>)} />
+
+
+>>>>>>> 9cc785681394015f89de3b556eb385aa0d437f5d:src/App.js
           </Switch>
         </Router>
       </div>
