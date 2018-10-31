@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios'
-import List from '@material-ui/core/List';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -45,7 +44,7 @@ export default class Dashboard extends Component {
   render() {
     let tabs;
     let addClient;
-    if (JSON.parse(localStorage.getItem('token')).role === "doctor") {
+    if (JSON.parse(localStorage.getItem('token')).role !== "client") {
       tabs = <Tabs value={this.state.tab} onChange={this.handleChange}>
       <Tab label="New Client" />
       {

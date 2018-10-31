@@ -27,6 +27,8 @@ class Login extends Component {
         const userInfo = jwt_decode(response.data.token)
         this.props.handleLogin(userInfo);
         this.props.history.push('/dashboard')
+      } else {
+        console.log(response.data)
       }
     })
   }

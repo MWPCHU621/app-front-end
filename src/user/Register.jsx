@@ -38,7 +38,6 @@ class Register extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-
   render() {
     return (
       <div>
@@ -97,7 +96,9 @@ class Register extends Component {
             onChange={this.handleInputChange}
             style={{minWidth: 120}}
           >
-            <MenuItem value={'doctor'}>Health Professional</MenuItem>
+            <MenuItem value={'physiotherapist'}>Physiotherapist</MenuItem>
+            <MenuItem value={'dietitian'}>Dietitian</MenuItem>
+            <MenuItem value={'counselor'}>Counselor</MenuItem>
             <MenuItem value={'client'}>Client</MenuItem>
           </Select>
           <Button type="submit" color="primary">Submit

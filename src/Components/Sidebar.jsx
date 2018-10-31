@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -18,7 +17,7 @@ class Sidebar extends Component {
     }
   render() {
     let messageBar;
-    if (this.props.notification === 0) {
+    if (this.props.notification === 0 || !localStorage.getItem('token')) {
        messageBar =
               <ListItem button onClick={() => this.navigate('/messages')}>
                 <ListItemText primary="Message" />

@@ -17,7 +17,6 @@ import CreateEvent from './Components/CreateEvent.jsx'
 import EditEvent from  './Components/EditEvent.jsx'
 import Home from './Components/Home.jsx'
 import Todo from './Components/todo.jsx'
-import Search from './Components/Search.jsx'
 import createHistory from 'history/createBrowserHistory'
 import axios from 'axios'
 
@@ -96,12 +95,9 @@ class App extends Component {
       }
 
       this.socket.onopen =  (event) => {
-        console.log("app render WebSocket")
         this.socket.send(this.state.userid);
         this.socket.onmessage = (event) => {
-          console.log("event.data",event.data);
           const received = JSON.parse(event.data);
-
           if (received.sender_id === this.state.userid) { //if this is the message I sent
             if (!this.state.messages[received.recipient_id]) {
               let messages = this.state.messages
@@ -123,10 +119,8 @@ class App extends Component {
               messages[received.sender_id].push(received);
               this.setState({messages: messages});
             }
-            // console.log('app mount', history.location.pathname)
-            // if (history.location.pathname !== '/messages') {
-              this.setState({notification: ++this.state.notification});
-
+              let count = this.state.notification + 1
+              this.setState({notification: count});
           }
         }
       };
