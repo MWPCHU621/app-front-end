@@ -17,13 +17,11 @@ export default class ChatRoom extends Component {
       relation: props.userInfo.relation,
       messages: {},
       tab: 0,
-      // count: 0,
     }
   }
 
 
    componentDidMount() {
-    let count = 0;
     console.log("chat room did mount ")
     console.log(this.props.history.location.pathname) // === '/messages'
     this.props.reset_notification_helper();

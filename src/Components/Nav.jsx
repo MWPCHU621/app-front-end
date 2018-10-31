@@ -41,9 +41,12 @@ class Nav extends Component {
               <Button style={{color:"white", textDecoration:"none"}}>Register</Button>
             </Link></div>
     } else {
-      LogBar = <Button style={{color:"white", textDecoration:"none"}}
+      LogBar = <React.Fragment><Button style={{color:"white", textDecoration:"none"}}
       onClick={this.props.handleLogout} >Log Out</Button>
+      <div>{JSON.parse(localStorage.getItem('token')).first_name}</div>
+      </React.Fragment>
     }
+
 
     return (
       <AppBar position="static">
@@ -56,6 +59,7 @@ class Nav extends Component {
             </Link>
             {LogBar}
           </Toolbar>
+
         </AppBar>
     );
 

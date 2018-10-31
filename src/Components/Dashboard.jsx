@@ -46,7 +46,7 @@ export default class Dashboard extends Component {
   render() {
     let tabs;
     let addClient;
-    if (JSON.parse(localStorage.getItem('token')).role === "doctor") {
+    if (JSON.parse(localStorage.getItem('token')).role !== "client") {
       tabs = <Tabs value={this.state.tab} onChange={this.handleChange}>
       <Tab label="New Client" />
       {

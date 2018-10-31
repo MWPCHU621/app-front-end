@@ -12,11 +12,13 @@ import axios from 'axios'
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import DeleteIcon from '@material-ui/icons/Delete';
 class Todo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userid: props.userInfo.userid,
+      role: props.userInfo.role,
       relation: props.userInfo.relation,
       tab: 0,
       tasks: {},
@@ -31,38 +33,67 @@ class Todo extends Component {
     const options = {
       method: "GET",
       url: 'http://localhost:3000/api/tasks/index',
-      params: {ids: this.state.relation.map(person => person.id)}
+      params: {id: this.state.userid,
+        role: this.state.role}
     }
     axios(options)
     .then((response) => {
-      const task_list = response.data.tasks;
+      const reminders = response.data.reminders;
+      console.log(response.data.reminders)
       const tasks = {};
-      task_list.forEach((task) => {
-        if (!tasks[task.user_id]) {
-          tasks[task.user_id] = [task]
-        } else {
-          tasks[task.user_id].push(task);
-        }
-      })
+      if (this.state.role !== 'client') {
+        reminders.forEach((task) => {
+          if (!tasks[task.client_id]) {
+            tasks[task.client_id] = [task]
+          } else {
+            tasks[task.client_id].push(task);
+          }
+        })
+      } else {
+        reminders.forEach((task) => {
+          if (!tasks[task.doctor_id]) {
+            tasks[task.doctor_id] = [task]
+          } else {
+            tasks[task.doctor_id].push(task);
+          }
+        })
+      }
       this.setState({tasks})
     })
   }
-  handleClick = (person) => {
+  delete_helper = (id, userid) => {
+    const options = {
+      method: "POST",
+      url: 'http://localhost:3000/api/tasks/destroy',
+      data: {id: id,
+        doctor_id: this.state.userid,
+        client_id: userid
+      }
+    }
+    axios(options)
+    .then((response) => {
+      const tasks = this.state.tasks;
+      tasks[userid] = response.data.reminders;
+      this.setState({tasks})
+    })
+  }
+  handleClick = (userid) => {
     const options = {
       method: "POST",
       url: 'http://localhost:3000/api/tasks/create',
-      data: {newtask: {
-        user_id: person.id,
+      data: {
+        doctor_id: this.state.userid,
+        client_id: userid,
         title: this.state.new_title,
         content: this.state.new_content
-      }}
+      }
     }
     this.setState({new_title: '',
       new_content: ''})
     axios(options)
     .then((response) => {
       const tasks = this.state.tasks;
-      tasks[person.id] = response.data.tasks;
+      tasks[userid] = response.data.reminders;
       this.setState({tasks})
     })
   }
@@ -72,9 +103,8 @@ class Todo extends Component {
   handleInputChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  add_helper = (props) => {
-    const person = props.person;
-    if (JSON.parse(localStorage.getItem('token')).role === "doctor") {
+  add_task = (person) => {
+    if (JSON.parse(localStorage.getItem('token')).role !== "client") {
     return (
       <TableRow>
         <TableCell>
@@ -102,12 +132,24 @@ class Todo extends Component {
           />
         </TableCell>
         <TableCell>
-          <Button variant="fab" color="primary" aria-label="Add" onClick={() => this.handleClick(person)}>
+          <Button variant="fab" color="primary" aria-label="Add" onClick={() => this.handleClick(person.id)}>
             <AddIcon />
           </Button>
         </TableCell>
       </TableRow>)
+    }
   }
+
+  delete_icon = (task, person) => {
+    if (JSON.parse(localStorage.getItem('token')).role !== "client") {
+    return (<TableCell>
+                    <Button variant="fab" aria-label="Delete" onClick={() => this.delete_helper(task.id, person.id)}>
+                      <DeleteIcon />
+                    </Button>
+                  </TableCell>
+      )
+  }
+
   }
   render() {
 
@@ -118,7 +160,6 @@ class Todo extends Component {
               Reminder
           </Toolbar>
         </AppBar>
-
 
         <AppBar position="static">
           <Tabs value={this.state.tab} onChange={this.handleChange}>
@@ -140,12 +181,13 @@ class Todo extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-              {this.add_helper(person)}
+              {this.add_task(person)}
               {
                 this.task_helper(person).map((task, index) => (
                   <TableRow key={task.id}>
                   <TableCell>{task.title}</TableCell>
                   <TableCell>{task.content}</TableCell>
+                  {this.delete_icon(task, person)}
                   </TableRow>
                 ))
               }
@@ -154,9 +196,6 @@ class Todo extends Component {
             )
           )
         }
-
-
-
       </div>
     );
   }

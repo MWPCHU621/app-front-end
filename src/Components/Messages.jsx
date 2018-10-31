@@ -21,7 +21,6 @@ export default class Messages extends Component {
     axios(option)
     .then((response) => {
       if (response.status === 200) {
-        console.log(response.data.messages)
         this.setState({messages: response.data.messages})
       }
     })
@@ -30,7 +29,7 @@ export default class Messages extends Component {
   render() {
       const messageRender_database = this.state.messages.map((msg) =>  {
         return (
-          <div className="message">
+          <div className="message" key={msg.id}>
             <List>
               <ListItem button>
                 <ListItemText secondary={msg.sender_name} />
@@ -44,7 +43,7 @@ export default class Messages extends Component {
 
     const messageRender = this.props.messages.map((msg) =>  {
         return (
-          <div className="message">
+          <div className="message" key={msg.id}>
 
             <List>
               <ListItem button>
@@ -57,8 +56,8 @@ export default class Messages extends Component {
     })
     return (
       <React.Fragment>
-      <div  className="messages">{messageRender_database}</div>
-      <div  className="messages">{messageRender}</div>
+      {messageRender_database}
+      {messageRender}
       </React.Fragment>
     );
   }

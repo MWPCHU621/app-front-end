@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -18,23 +17,26 @@ class Sidebar extends Component {
       userid: props.userid,
     };
   }
-
+  navigate = (url) => {
+      this.props.history.push(url)
+    }
   render() {
     let messageBar;
-    if (this.props.notification === 0) {
-       messageBar = <Link to="/messages">
-              <ListItem button className="sidebar__notificationBadge">
-                <ListItemText primary="Message" />
+    if (this.props.notification === 0 || !localStorage.getItem('token')) {
+       messageBar =
+              <ListItem
+                button
+                onClick={() => this.navigate('/messages')}
+                className="sidebar__notificationBadge">
+                  <ListItemText primary="Message" />
               </ListItem>
-            </Link>
     } else {
-       messageBar = <Link to="/messages">
-              <ListItem button>
-               <Badge color="primary" badgeContent={this.props.notification} className="sidebar__notificationBadge">
+       messageBar =
+              <ListItem button onClick={() => this.navigate('/messages')}>
+               <Badge color="primary" badgeContent={this.props.notification} >
                 <ListItemText primary="Message" />
                 </Badge>
               </ListItem>
-            </Link>
     }
 
     return (
@@ -66,6 +68,11 @@ class Sidebar extends Component {
             <Link to="/reminder">
               <ListItem button>
                 <ListItemText primary="Reminder" />
+              </ListItem>
+            </Link>
+            <Link to="/nutrition">
+              <ListItem button>
+                <ListItemText primary="Nutrition" />
               </ListItem>
             </Link>
           </List>

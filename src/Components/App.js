@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import '../Style/App.css';
-
 import {
   BrowserRouter as Router,
   Switch,
@@ -17,9 +16,11 @@ import CreateEvent from './CreateEvent.jsx'
 import EditEvent from  './EditEvent.jsx'
 import Home from './Home.jsx'
 import Todo from './todo.jsx'
+import Nutrition from './nutrition/nutrition.jsx'
 // import Search from './Search.jsx'
-import createHistory from 'history/createBrowserHistory'
 
+import createHistory from 'history/createBrowserHistory'
+import axios from 'axios'
 
 const history = createHistory({
   forceRefresh: true
@@ -37,7 +38,28 @@ class App extends Component {
       messages: {},
     };
   }
+  componentDidMount() {
+    if (this.state.role === 'client') {
+      const option = {
+        method: "GET",
+        url: 'http://localhost:3000/api/sessions/update',
+        params: {id: this.state.userid}
+      }
+      axios(option)
+      .then((response) => {
+        console.log(response.data.updated_relation)
+        if (response.status === 200) {
+          let token = JSON.parse(localStorage.getItem('token'));
+          localStorage.removeItem('token');
+          token.relation = response.data.updated_relation;
+          let myStorage = window.localStorage;
+          myStorage.setItem("token", JSON.stringify(token))
+          this.setState({relation: response.data.updated_relation})
+        }
+      })
+    }
 
+  }
   handleLogout = () => {
     localStorage.removeItem('token');
     history.push('/');
@@ -64,9 +86,9 @@ class App extends Component {
     let myStorage = window.localStorage;
     myStorage.setItem("token", JSON.stringify(token))
   }
-  reset_notification_helper = (notification) => {
-    this.setState({notification: 0});
-  }
+  // reset_notification_helper = (notification) => {
+  //   this.setState({notification: 0});
+  // }
 
   render() {
     if (this.state.userid) {
@@ -75,12 +97,9 @@ class App extends Component {
       }
 
       this.socket.onopen =  (event) => {
-        console.log("app render WebSocket")
         this.socket.send(this.state.userid);
         this.socket.onmessage = (event) => {
-          console.log("event.data",event.data);
           const received = JSON.parse(event.data);
-
           if (received.sender_id === this.state.userid) { //if this is the message I sent
             if (!this.state.messages[received.recipient_id]) {
               let messages = this.state.messages
@@ -102,11 +121,8 @@ class App extends Component {
               messages[received.sender_id].push(received);
               this.setState({messages: messages});
             }
-            console.log('app mount', history.location.pathname)
-            if (history.location.pathname !== '/messages') {
-              this.setState({notification: ++this.state.notification});
-            }
-
+              let count = this.state.notification + 1
+              this.setState({notification: count});
           }
         }
       };
@@ -170,13 +186,19 @@ class App extends Component {
             <Route path="/reminder" render={(props) => (
               <div>
                 <Sidebar history={history} notification={this.state.notification} />
-                  <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
+                <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
                 <div className="app_mainContent" >
                   <Todo userInfo={this.state} />
                 </div>
               </div>)} />
-
-
+            <Route path="/nutrition" render={(props) => (
+              <div>
+                <Sidebar history={history} notification={this.state.notification} />
+                <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
+                <div className="app_mainContent">
+                  <Nutrition userInfo={this.state} />
+                </div>
+              </div>)} />
           </Switch>
         </Router>
       </div>
