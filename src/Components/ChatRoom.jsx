@@ -20,10 +20,7 @@ export default class ChatRoom extends Component {
     }
   }
 
-
    componentDidMount() {
-    console.log("chat room did mount ")
-    console.log(this.props.history.location.pathname) // === '/messages'
     this.props.reset_notification_helper();
    }
 

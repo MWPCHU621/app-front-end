@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../Style/App.css';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -17,9 +18,7 @@ import EditEvent from  './EditEvent.jsx'
 import Home from './Home.jsx'
 import Todo from './todo.jsx'
 import Nutrition from './nutrition/nutrition.jsx'
-import Exercise from './Components/nutrition/exercise.jsx'
-// import Search from './Search.jsx'
-
+import Exercise from './nutrition/exercise.jsx'
 import createHistory from 'history/createBrowserHistory'
 import axios from 'axios'
 
@@ -87,9 +86,9 @@ class App extends Component {
     let myStorage = window.localStorage;
     myStorage.setItem("token", JSON.stringify(token))
   }
-  // reset_notification_helper = (notification) => {
-  //   this.setState({notification: 0});
-  // }
+  reset_notification_helper = (notification) => {
+    this.setState({notification: 0});
+  }
 
   render() {
     if (this.state.userid) {
@@ -122,8 +121,13 @@ class App extends Component {
               messages[received.sender_id].push(received);
               this.setState({messages: messages});
             }
+            console.log(history.location.pathname)
+            if (history.location.pathname !== '/messages') {
               let count = this.state.notification + 1
               this.setState({notification: count});
+            }
+
+
           }
         }
       };
@@ -135,7 +139,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" render={() => (
               <div>
-                <Sidebar/>
+                <Sidebar history={history} notification={this.state.notification}/>
                   <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
                 <div className="app_mainContent">
                   <Home />
@@ -180,8 +184,8 @@ class App extends Component {
                   <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
                 <div className="app_mainContent" >
                   <ChatRoom history={history}
-                  reset_notification_helper={this.reset_notification_helper}
-                  messages={this.state.messages} userInfo={this.state} />
+                  messages={this.state.messages} userInfo={this.state}
+                  reset_notification_helper={this.reset_notification_helper} />
                 </div>
               </div>)} />
             <Route path="/reminder" render={(props) => (

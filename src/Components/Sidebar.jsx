@@ -51,35 +51,25 @@ class Sidebar extends Component {
         <CssBaseline/>
         <div  className='toolbar'>
           <List >
-            <Link to="/dashboard">
-              <ListItem button >
+              <ListItem button onClick={() => this.navigate('/dashboard')}>
                 <ListItemText primary="Dashboard" />
               </ListItem>
-            </Link>
             <Divider/>
-            <Link to="/Calendar">
-              <ListItem button>
+              <ListItem button onClick={() => this.navigate('/calendar')}>
                 <ListItemText primary="Calendar" />
               </ListItem>
-            </Link>
             <Divider/>
             {messageBar}
             <Divider/>
-            <Link to="/reminder">
-              <ListItem button>
+              <ListItem button  onClick={() => this.navigate('/reminder')}>
                 <ListItemText primary="Reminder" />
               </ListItem>
-            </Link>
-            <Link to="/nutrition">
-              <ListItem button>
+              <ListItem button onClick={() => this.navigate('/nutrition')}>
                 <ListItemText primary="Nutrition" />
               </ListItem>
-            </Link>
-            <Link to="/exercise">
-              <ListItem button>
+              <ListItem button onClick={() => this.navigate('/exercise')}>
                 <ListItemText primary="Exercise" />
               </ListItem>
-            </Link>
           </List>
         </div>
       </Drawer>
@@ -87,10 +77,6 @@ class Sidebar extends Component {
 
   }
 }
-
-// Sidebar.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
 
 export default Sidebar;
 
