@@ -1,0 +1,81 @@
+@keyframes editEvent {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+body {
+  background-color:#1f2833;
+}
+
+.editEvent_container {
+  text-align: center;
+  margin-top: 10%;
+  animation-name:editEvent;
+  animation-duration: 1.5s;
+}
+
+.editEvent_title {
+  color:white;
+}
+
+
+.editEvent_form {
+  background-color:white;
+}
+
+.icon {
+  color:lightgrey;
+}
+
+.editEvent_time  {
+  width: 11.5rem !important;
+}
+
+.editEvent_dateRange {
+  padding:0;
+  margin:0.5rem 0 0 0;
+  font-size:1rem;
+}
+.start {
+  margin-right: 0.5rem !important;
+}
+.end {
+  margin-left: 0.5rem !important;
+}
+
+.editEvent_input {
+  width:25rem !important;
+}
+
+.editEvent_select__allday {
+  /*width: 9rem !important;*/
+  margin:0.5rem 0.35rem 1rem 0;
+  width: 22rem !important;
+/*  margin-top:0.5rem !important;
+  margin-bottom:1rem !important;*/
+
+}
+
+/*.allday {
+}*/
+
+.client {
+  margin:0.5rem 0 1rem 0.35rem;
+  width: 22rem !important;
+}
+
+.editEvent_btn {
+  margin:1rem 0 1rem 0 !important;
+  border: 1px solid darkgrey !important;
+  width: 11.5rem !important;
+}
+
+.save {
+  margin-right:2rem !important;
+}
+
+
+.editEvent_anchor {
+  text-decoration: none !important;
+  color:#3f51b5 !important;
+}

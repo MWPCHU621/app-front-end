@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import '../Style/App.css';
 
 import {
   BrowserRouter as Router,
@@ -7,17 +7,17 @@ import {
   Route
 } from 'react-router-dom';
 import Dashboard from './Dashboard.jsx'
-import Register from './user/Register.jsx'
-import Login from './user/login.jsx'
-import Nav from './Components/Nav.jsx'
-import Sidebar from './Components/Sidebar.jsx'
-import Calendar from './Components/Calendar.jsx'
-import ChatRoom from './Components/ChatRoom.jsx'
-import CreateEvent from './Components/CreateEvent.jsx'
-import EditEvent from  './Components/EditEvent.jsx'
-import Home from './Components/Home.jsx'
-import Todo from './Components/todo.jsx'
-import Search from './Components/Search.jsx'
+import Register from './Register.jsx'
+import Login from './Login.jsx'
+import Nav from './Nav.jsx'
+import Sidebar from './Sidebar.jsx'
+import Calendar from './Calendar.jsx'
+import ChatRoom from './ChatRoom.jsx'
+import CreateEvent from './CreateEvent.jsx'
+import EditEvent from  './EditEvent.jsx'
+import Home from './Home.jsx'
+import Todo from './todo.jsx'
+// import Search from './Search.jsx'
 import createHistory from 'history/createBrowserHistory'
 
 
@@ -118,51 +118,63 @@ class App extends Component {
           <Switch>
             <Route exact path="/" render={() => (
               <div>
-              <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Sidebar  style={{float:"left"}}/>
-              <Home />
+                <Sidebar/>
+                  <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
+                <div className="app_mainContent">
+                  <Home />
+                </div>
               </div>
               )}
             />
             <Route exact path="/dashboard" render={() => (
               <div>
-              <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Sidebar history={history} notification={this.state.notification} />
-              <Dashboard userid={this.state.userid}
-              relation={this.state.relation}
-              role={this.state.role} updateRelation={this.updateRelation}
-               />
+                <Sidebar history={history} notification={this.state.notification} />
+                  <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
+                <div className="app_mainContent">
+                  <Dashboard userid={this.state.userid}
+                  relation={this.state.relation}
+                  role={this.state.role} updateRelation={this.updateRelation}/>
+                </div>
               </div>)}
             />
             <Route path="/register" render={() => (
               <div>
-              <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Register history={history} /></div>)} />
+                <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
+                <Register history={history} />
+              </div>)} />
             <Route path="/login" render={() => (
               <div>
-              <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Login history={history} handleLogin={this.handleLogin} /></div>) } />
+                <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
+                <Login history={history} handleLogin={this.handleLogin} />
+              </div>) } />
             <Route exact path="/calendar" render={(props) => (
               <div>
-              <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Sidebar history={history} notification={this.state.notification} />
-              <Calendar relation={this.state.relation} {...props} /></div>)} />
+                <Sidebar history={history} notification={this.state.notification} />
+                  <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
+                <div className="app_mainContent">
+                  <Calendar relation={this.state.relation} {...props} />
+                </div>
+              </div>)} />
             <Route exact path = "/calendar/create_event" component = {CreateEvent} />
             <Route exact path = "/calendar/edit_event" component={EditEvent} />
             <Route path="/messages" render={(props) => (
               <div>
-              <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Sidebar history={history} notification={this.state.notification} />
-              <ChatRoom history={history}
-              reset_notification_helper={this.reset_notification_helper}
-              messages={this.state.messages} userInfo={this.state} />
-              </div>
-              )} />
+                <Sidebar history={history} notification={this.state.notification} />
+                  <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
+                <div className="app_mainContent" >
+                  <ChatRoom history={history}
+                  reset_notification_helper={this.reset_notification_helper}
+                  messages={this.state.messages} userInfo={this.state} />
+                </div>
+              </div>)} />
             <Route path="/reminder" render={(props) => (
               <div>
-              <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
-              <Sidebar history={history} notification={this.state.notification} />
-              <Todo userInfo={this.state} /> </div>)} />
+                <Sidebar history={history} notification={this.state.notification} />
+                  <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
+                <div className="app_mainContent" >
+                  <Todo userInfo={this.state} />
+                </div>
+              </div>)} />
 
 
           </Switch>

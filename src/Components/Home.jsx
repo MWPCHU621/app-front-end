@@ -1,8 +1,9 @@
 import React from 'react'
+import '../Style/home.css'
 
 const Home = (props) => (
   <div>
-    <p>Im Home page</p>
+    <p className='home'>Im Home page</p>
   </div>
 )
 

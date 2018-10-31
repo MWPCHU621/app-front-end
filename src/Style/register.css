@@ -1,0 +1,50 @@
+@keyframes registerForm {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.registerForm_divContainer {
+  text-align: center;
+  margin-top: 10%;
+  animation-name:registerForm;
+  animation-duration: 1.5s;
+  background-color: white;
+}
+
+.registerForm_title {
+  margin-top:1rem;
+}
+
+.name {
+  width: 12rem !important;
+}
+.registerForm_input {
+  width:25rem !important;
+}
+
+.icon {
+  color:lightgrey;
+}
+
+.registerForm_select {
+  width:23rem !important;
+}
+
+.registerForm_Btn {
+  border: 1px solid darkgrey !important;
+  width: 12rem !important;
+  margin-bottom:1rem !important;
+}
+
+.redirect {
+  margin: 0.5rem 0 0 0.5rem !important;
+}
+
+.submit {
+  margin: 0.5rem 0.5rem 0 0 !important;
+}
+
+.registerForm_loginAnchor {
+  text-decoration: none !important;
+  color:#3f51b5 !important;
+}

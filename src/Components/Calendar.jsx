@@ -5,6 +5,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css"
 import CalendarDialog from './CalendarDialog.jsx'
 import Button from '@material-ui/core/Button';
 import axios from 'axios'
+import '../Style/calendar.css'
 
 const localizer = BigCalendar.momentLocalizer(moment);
 
@@ -63,8 +64,11 @@ class Calendar extends Component {
   render() {
     let addButton;
     if(JSON.parse(localStorage.getItem('token')).role === "doctor"){
-      addButton = <Button onClick={this.createEventRouteChange} style={{border:"1px solid lightgrey", borderRadius:"2px"}}>
-        Add new Event
+      addButton = <Button
+        onClick={this.createEventRouteChange}
+        style={{border:"1px solid lightgrey", borderRadius:"2px"}}
+        className='Calendar_addEventBtn'>
+          Add new Event
       </Button>
     }
     return(
@@ -77,7 +81,10 @@ class Calendar extends Component {
           startAccessor="start"
           endAccessor="end"
           onSelectEvent={this.eventClickAction}
-          length={60}
+          timeslots={2}
+          step={30}
+          selectable
+          onSelectSlot = {() => {window.alert()}}
         />
         <div>
           {this.state.show ?

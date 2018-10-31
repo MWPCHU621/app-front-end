@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios'
-import List from '@material-ui/core/List';
+// import List from '@material-ui/core/List';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Toolbar from '@material-ui/core/Toolbar';
+import '../Style/dashboard.css'
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -58,34 +59,38 @@ export default class Dashboard extends Component {
       addClient = <div>
         {
           this.state.tab === 0 &&
-          <form onSubmit={this.handleSubmit}>
+          <form className='dashboard_form__addClient' onSubmit={this.handleSubmit}>
             <TextField
+              className='dashboard_input__newClient'
               label="Add Client"
               style={{ margin: 8 }}
               placeholder="Enter Client Email"
               margin="normal"
               onChange={this.handleInputChange}
               value={this.state.add_client_email}
+
             />
-          <Button color="inherit" type="submit">Add</Button>
+          <Button color="inherit" type="submit" className='dashboard_form__submitBtn'>Add</Button>
           </form>
         }
-        {   this.state.relation.map((person, index) => (
+        {this.state.relation.map((person, index) => (
             (this.state.tab - 1) === index &&
-            <div>
-              <p>First Name: {person.first_name}</p>
-              <p>Last Name: {person.last_name}</p>
-              <p>Email: {person.email}</p>
-            </div>
-            ))
+            <div className='dashboard_description'>
+              <label className='dashboard_description__label'>Client: </label>
+              <label className='dashboard_description__name'>{person.first_name} {person.last_name}</label>
+              <label className='dashboard_description__lname'></label>
+              <br></br>
+              <label className='dashboard_description__label'>Email: </label>
+              <label className='dashboard_description__email'>{person.email}</label>
+            </div>))
         }
       </div>
     }
 
     return (
       <div>
-      <AppBar position="static" color="default">
-          <Toolbar>
+        <AppBar position="static" color="default">
+          <Toolbar style={{textAlign:"center"}}>
               Dashboard
           </Toolbar>
         </AppBar>
@@ -93,12 +98,8 @@ export default class Dashboard extends Component {
         <AppBar position="static">
           {tabs}
         </AppBar>
+        <h1 className='dashboard_greeting'>Welcome Back! Dr. {JSON.parse(localStorage.getItem('token')).first_name}</h1>
         {addClient}
-
-
-
-        <h>Welcome Back! {JSON.parse(localStorage.getItem('token')).first_name}</h>
-
       </div>
     );
   }

@@ -1,0 +1,79 @@
+@keyframes createEvent {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+body {
+  background-color:#1f2833;
+}
+
+.createEvent_container {
+  text-align: center;
+  margin-top: 10%;
+  animation-name:createEvent;
+  animation-duration: 1.5s;
+}
+
+.createEvent_title {
+  color:white;
+}
+
+.createEvent_form {
+  background-color:white;
+}
+
+.icon {
+  color:lightgrey;
+}
+
+.createEvent_time  {
+  width: 11.5rem !important;
+}
+.createEvent_dateRange {
+  padding:0;
+  margin:0.5rem 0 0 0;
+  font-size:1rem;
+}
+.start {
+  margin-right: 0.5rem !important;
+}
+.end {
+  margin-left: 0.5rem !important;
+}
+
+.createEvent_input {
+  width:25rem !important;
+}
+
+.createEvent_select__allday {
+  /*width: 9rem !important;*/
+  margin:0.5rem 0.35rem 1rem 0;
+  width: 22rem !important;
+/*  margin-top:0.5rem !important;
+  margin-bottom:1rem !important;*/
+
+}
+
+/*.allday {
+}*/
+
+.client {
+  margin:0.5rem 0 1rem 0.35rem;
+  width: 22rem !important;
+}
+
+.createEvent_btn {
+  margin:1rem 0 1rem 0 !important;
+  border: 1px solid darkgrey !important;
+  width: 11.5rem !important;
+}
+
+.save {
+  margin-right:2rem !important;
+}
+
+
+.createEvent_anchor {
+  text-decoration: none !important;
+  color:#3f51b5 !important;
+}

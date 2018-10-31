@@ -1,0 +1,31 @@
+#modal-container {
+  padding:0;
+}
+
+.modal-title, .modal-description {
+  text-align:left;
+  padding: 2rem 0 2rem 1rem;
+}
+
+.modal-title {
+  font-size:3rem !important;
+  background-color:#7986CB;
+  color:white !important;
+}
+
+.modal-description {
+  font-size:1rem;
+}
+
+.modal-btnContainer {
+  text-align: right;
+  padding:0 22px 22px 0;
+}
+
+.modal-btn {
+  border:1px solid grey !important;
+}
+
+.leftIcon: {
+  margin-left: 5px,
+}

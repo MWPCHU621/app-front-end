@@ -1,0 +1,36 @@
+@keyframes dashboard {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.dashboard_form__addClient, .dashboard_greeting, .dashboard_description {
+  text-align: center !important;
+  animation-name:dashboard !important;
+  animation-duration: 1.5s !important;
+}
+
+.dashboard_greeting {
+  margin-top:15%;
+}
+
+
+.dashboard_form__submitBtn {
+  margin-top:1.5rem !important;
+}
+
+.dashboard_description__name, .dashboard_description__label, .dashboard_description__email {
+  font-size:1.5em;
+  display:inline-block;
+  margin-top:0.5em;
+}
+
+.dashboard_description__label {
+  font-style:italic;
+  margin-right:0.6em;
+}
+
+
+label {
+  margin:0;
+  padding:0;
+}

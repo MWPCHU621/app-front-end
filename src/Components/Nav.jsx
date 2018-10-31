@@ -6,6 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
+import '../Style/navbar.css'
 
 const styles = {
   root: {
@@ -51,7 +52,7 @@ class Nav extends Component {
               Back on Track
             </Typography>
             <Link to="/">
-              <Button style={{color:"white", textDecoration:"none"}}>Home</Button>
+              <Button className='navbar_homeBtn'>Home</Button>
             </Link>
             {LogBar}
           </Toolbar>

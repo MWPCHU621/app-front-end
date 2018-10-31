@@ -1,0 +1,45 @@
+
+
+@keyframes loginForm {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.loginForm_divContainer {
+  margin-top:10%;
+  text-align: center;
+  animation-name:loginForm;
+  animation-duration: 1.5s;
+  background-color: white;
+}
+
+.loginForm_title {
+  margin-top: 1rem !important;
+}
+
+.loginForm_input {
+  width:20rem !important;
+}
+
+.loginForm_description {
+  color:grey;
+  margin:0;
+}
+
+.loginForm_registerBtn {
+  border:1px solid darkgrey !important;
+  margin: 0.5rem 0 1rem 0.5rem !important;
+  width:12rem;
+}
+.loginForm_submitBtn {
+  border: 1px solid darkgrey !important;
+  margin: 0.5rem 0.5rem 1rem 0 !important;
+  width: 7rem !important;
+}
+
+.loginForm_registerAnchor {
+  text-decoration: none !important;
+  color:#3f51b5 !important;
+}
+
+

@@ -6,6 +6,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import axios from 'axios'
+import '../Style/message.css'
 
 export default class ChatRoom extends Component {
   constructor(props) {
@@ -26,37 +27,6 @@ export default class ChatRoom extends Component {
     console.log("chat room did mount ")
     console.log(this.props.history.location.pathname) // === '/messages'
     this.props.reset_notification_helper();
-    // this.socket = new WebSocket("ws://localhost:3003");
-    // this.socket.onopen =  (event) => {
-    //   this.socket.send(this.state.userid);
-    //   this.socket.onmessage = (event) => {
-    //     console.log("event.data",event.data);
-    //     const received = JSON.parse(event.data);
-
-    //     if (received.sender_id === this.state.userid) { //if this is the message I sent
-    //       if (!this.state.messages[received.recipient_id]) {
-    //         let messages = this.state.messages
-    //         messages[received.recipient_id] = [received]
-    //         this.setState({messages: messages});
-    //       } else {
-    //         let messages = this.state.messages
-    //         messages[received.recipient_id].push(received);
-    //         this.setState({messages: messages});
-    //       }
-    //     } else { //someone send me message
-    //       this.props.notification_helper(++count); /////
-    //       if (!this.state.messages[received.sender_id]) {
-    //         let messages = this.state.messages
-    //         messages[received.sender_id] = [received]
-    //         this.setState({messages: messages});
-    //       } else {
-    //         let messages = this.state.messages
-    //         messages[received.sender_id].push(received);
-    //         this.setState({messages: messages});
-    //       }
-    //     }
-    //   }
-    // };
    }
 
   sendMsg = (text) => {
@@ -106,13 +76,12 @@ export default class ChatRoom extends Component {
           {
             this.state.relation.map((person, index) => (
               <Tab label={person.first_name} />
-            )
-            )
+            ))
           }
           </Tabs>
         </AppBar>
         {message_display_helper}
-        <ChatBar sendMsg={this.sendMsg} />
+        <ChatBar className='chatbar' sendMsg={this.sendMsg} />
       </div>
     return (<React.Fragment>{chat}</React.Fragment>);
   }

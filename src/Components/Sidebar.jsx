@@ -5,6 +5,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Badge from '@material-ui/core/Badge';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+
+import '../Style/sidebar.css'
 
 class Sidebar extends Component {
   constructor(props) {
@@ -16,16 +21,16 @@ class Sidebar extends Component {
 
   render() {
     let messageBar;
-    if (this.props.notification === 0) { //|| this.props.history.location.pathname === '/messages'
+    if (this.props.notification === 0) {
        messageBar = <Link to="/messages">
-              <ListItem button>
+              <ListItem button className="sidebar__notificationBadge">
                 <ListItemText primary="Message" />
               </ListItem>
             </Link>
     } else {
        messageBar = <Link to="/messages">
               <ListItem button>
-               <Badge color="primary" badgeContent={this.props.notification} >
+               <Badge color="primary" badgeContent={this.props.notification} className="sidebar__notificationBadge">
                 <ListItemText primary="Message" />
                 </Badge>
               </ListItem>
@@ -33,26 +38,39 @@ class Sidebar extends Component {
     }
 
     return (
-      <div className="sidebar" style={{width: 120}}>
-        <List>
-          <Link to="/dashboard">
-          <ListItem button>
-              <ListItemText primary="Dashboard" />
-            </ListItem>
-          </Link>
-          <Link to="/Calendar">
-            <ListItem button>
-              <ListItemText primary="Calendar" />
-            </ListItem>
-          </Link>
-          {messageBar}
-          <Link to="/reminder">
-            <ListItem button>
-              <ListItemText primary="Reminder" />
-            </ListItem>
-          </Link>
-        </List>
-      </div>
+      <Drawer
+        className="drawer"
+        variant="permanent"
+        classes={{
+          paper:"drawerPaper",
+        }}
+        anchor="left"
+      >
+        <CssBaseline/>
+        <div  className='toolbar'>
+          <List >
+            <Link to="/dashboard">
+              <ListItem button >
+                <ListItemText primary="Dashboard" />
+              </ListItem>
+            </Link>
+            <Divider/>
+            <Link to="/Calendar">
+              <ListItem button>
+                <ListItemText primary="Calendar" />
+              </ListItem>
+            </Link>
+            <Divider/>
+            {messageBar}
+            <Divider/>
+            <Link to="/reminder">
+              <ListItem button>
+                <ListItemText primary="Reminder" />
+              </ListItem>
+            </Link>
+          </List>
+        </div>
+      </Drawer>
     );
 
   }

@@ -6,18 +6,21 @@ import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import axios from 'axios'
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+import InputAdornment from '@material-ui/core/InputAdornment';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import CloseIcon from '@material-ui/icons/Close';
+import '../Style/calendarDialog.css'
 
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
+  const top = 50;
+  const left = 50;
 
   return {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
+
   };
 }
 
@@ -69,36 +72,47 @@ class SimpleModal extends React.Component {
     let editButton;
     let deleteButton;
     if(JSON.parse(localStorage.getItem('token')).role === "doctor") {
-      editButton = <Button onClick={this.redirectToEdit}>Edit</Button>
-      deleteButton = <Button onClick={this.handleDelete}>Delete</Button>
+      editButton =
+        <Button onClick={this.redirectToEdit}className='modal-btn'>
+          Edit
+          <EditIcon className='leftIcon' />
+        </Button>
+      deleteButton =
+        <Button onClick={this.handleDelete}className='modal-btn'>
+          Delete
+          <DeleteIcon className='leftIcon' />
+        </Button>
     }
 
     return (
-      <div>
-        <Typography gutterBottom>Click to get the full Modal experience!</Typography>
-        <Button onClick={this.props.eventClickAction}>Open Modal</Button>
+      <div >
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
           open={this.props.show}
           onClose={this.eventClickAction}
+
         >
-          <div style={getModalStyle()} className={classes.paper}>
-            <Typography variant="h6" id="modal-title">
+          <div style={getModalStyle()} className={classes.paper} id='modal-container'>
+            <Typography variant="h6" id="modal-title" className='modal-title'>
               {eventInfo.title}
             </Typography>
-            <Typography variant="subtitle1" id="simple-modal-description">
-              {eventInfo.description}
+            <Typography
+              variant="subtitle1"
+              id="simple-modal-description"
+              className='modal-description'
+            >
+                {eventInfo.description}
             </Typography>
-            <Typography variant = "subtitle1" id="simple-modal-description">
-              Start: {eventInfo.start.toString().substring(0,15)}
-            </Typography>
-            <Typography variant = "subtitle1" id="simple-modal-description">
-              End: {eventInfo.end.toString().substring(0,15)}
-            </Typography>
-            {editButton}
-            {deleteButton}
-            <Button onClick={this.props.eventClickAction} style={{border:"1px solid grey"}}>Close</Button>
+
+            <div className='modal-btnContainer'>
+              {editButton}
+              {deleteButton}
+              <Button onClick={this.props.eventClickAction} className='modal-btn'>
+                  Close
+                  <CloseIcon className='leftIcon' />
+              </Button>
+            </div>
           </div>
         </Modal>
       </div>

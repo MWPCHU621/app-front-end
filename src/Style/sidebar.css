@@ -1,3 +1,42 @@
-.sidebar {
-  float:left;
+
+.root {
+    display: 'flex';
+}
+
+.appBar {
+    width: `calc(100% - 15rem)`;
+    marginLeft: 15rem;
+}
+
+.drawer {
+    width: 15rem;
+    flexShrink: 0;
+}
+
+.drawerPaper {
+    width: 15rem;
+    margin-top: 65px !important;
+}
+
+.toolbar {
+    margin:0;
+    padding:0;
+}
+
+.MuiList-root-39 {
+    width: 12.5rem;
+}
+
+.MuiListItem-root-43 {
+    text-align:center !important;
+}
+
+
+
+toolbar: theme.mixins.toolbar;
+content {
+    flexGrow: 1;
+    backgroundColor: theme.palette.background.default;
+    padding: theme.spacing.unit * 3;
+
 }
