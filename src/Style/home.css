@@ -20,12 +20,19 @@
 }
 
 .home_title {
+  align-items: center;
   text-align: center;
-  font-size: 2rem;
-  padding:2rem;
+  font-size: 3rem;
+  font-weight: bold;
+  /*background-color: lightgrey;*/
+  width:30%;
 }
 
 .home_description {
-  font-size: 1rem;
+  align-items: center;
+  font-size: 2rem;
   opacity:1;
+  font-weight: bold;
+  /*background-color: lightgrey;*/
+  width:50%;
 }
