@@ -19,11 +19,6 @@ import Home from './Home.jsx'
 import Todo from './todo.jsx'
 import Nutrition from './nutrition/nutrition.jsx'
 import Exercise from './nutrition/exercise.jsx'
-<<<<<<< HEAD
-// import Search from './Search.jsx'
-
-=======
->>>>>>> 5f25b03b5298b78b58bd8e5cc85a2d9c269bb221
 import createHistory from 'history/createBrowserHistory'
 import axios from 'axios'
 
@@ -91,12 +86,6 @@ class App extends Component {
     let myStorage = window.localStorage;
     myStorage.setItem("token", JSON.stringify(token))
   }
-<<<<<<< HEAD
-  reset_notification_helper = (notification) => {
-    this.setState({notification: 0});
-  }
-=======
->>>>>>> 5f25b03b5298b78b58bd8e5cc85a2d9c269bb221
 
   render() {
     if (this.state.userid) {
@@ -146,13 +135,9 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/" render={() => (
-<<<<<<< HEAD
+
               <div className='app_routeContainer'>
                 <Sidebar history={history}  notification={this.state.notification}/>
-=======
-              <div>
-                <Sidebar history={history} notification={this.state.notification}/>
->>>>>>> 5f25b03b5298b78b58bd8e5cc85a2d9c269bb221
                   <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
                 <div className="app_mainContent">
                   <Home />
