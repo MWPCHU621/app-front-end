@@ -70,11 +70,13 @@ class Sidebar extends Component {
                 <ListItemText primary="Reminder" />
               </ListItem>
             </Link>
+            <Divider/>
             <Link to="/nutrition">
               <ListItem button>
                 <ListItemText primary="Nutrition" />
               </ListItem>
             </Link>
+            <Divider/>
             <Link to="/exercise">
               <ListItem button>
                 <ListItemText primary="Exercise" />

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import  { Redirect } from 'react-router-dom'
 import axios from 'axios'
-
+import { DatePicker } from 'antd';
+import moment from 'moment';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -15,6 +16,9 @@ import AddIcon from '@material-ui/icons/Add'
 import CancelIcon from '@material-ui/icons/Close'
 
 import '../Style/createEvent.css'
+import 'antd/dist/antd.css';
+
+
 
 
 class CreateEvent extends Component {
@@ -28,7 +32,6 @@ class CreateEvent extends Component {
       allday: false,
       client_id: '',
       doctor_id: JSON.parse(localStorage.getItem('token')).user_id,
-
     };
   }
 
@@ -41,7 +44,7 @@ class CreateEvent extends Component {
     }
     axios(option)
     .then((response) => {
-      console.log(response.data)
+      console.log(this.state)
       this.setState({redirect: "/calendar"})
     })
   }
@@ -50,6 +53,14 @@ class CreateEvent extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  handleStartInput = e => {
+    this.setState({ start:e.format('YYYY-MM-DD')})
+  }
+
+  handleEndInput = e => {
+    this.setState({end:e.format('YYYY-MM-DD')})
+  }
+
 
   render() {
     if (this.state.redirect) {
@@ -57,116 +68,99 @@ class CreateEvent extends Component {
         <Redirect to={this.state.redirect} />);
     }
     return (
-      <div className='createEvent_container'>
-        <h2 className='createEvent_title'>Create a new Event</h2>
-        <form onSubmit={this.handleSubmit} className='createEvent_form'>
+      <div>
+        <div className="bg"></div>
+        <div className='createEvent_container'>
+          <h1 className='createEvent_title'>Create a new Event</h1>
+          <form onSubmit={this.handleSubmit} className='createEvent_form'>
 
-          <TextField
-            className='createEvent_input'
-            name = "title"
-            label="Title"
-            style={{ margin: 8 }}
-            placeholder="Enter title of event"
-            margin="normal"
-            onChange={this.handleInputChange}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start" className='icon'>
-                  <Title />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <br/>
-          <TextField
-            className='createEvent_input'
-            name = "description"
-            label="Description"
-            style={{ margin: 8 }}
-            placeholder="Enter description of event"
-            margin="normal"
-            multiline
-            onChange={this.handleInputChange}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start" className='icon'>
-                  <Description />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <br/>
-          <TextField
-            className='createEvent_time start'
-            name = "start"
-            label="Start Date"
-            style={{ margin: 8 }}
-            placeholder="YYYY-MM-DD"
-            margin="normal"
-            onChange={this.handleInputChange}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start" className='icon'>
-                  <DateRange />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <TextField
-            className='createEvent_time end'
-            name = "end"
-            label="End Date"
-            style={{ margin: 8 }}
-            placeholder="YYYY-MM-DD"
-            margin="normal"
-            onChange={this.handleInputChange}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start" className='icon'>
-                  <DateRange />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <br/>
-          <InputLabel htmlFor="allday">All Day</InputLabel>
-          <Select
-            className='createEvent_select__allday'
-            id="allday"
-            value={this.state.allday}
-            name="allday"
-            onChange={this.handleInputChange}
-            style={{minWidth: 120}}
-          >
-            <MenuItem value={'true'}>True</MenuItem>
-            <MenuItem value={'false'}>False</MenuItem>
-          </Select>
-          <br/>
-          <InputLabel htmlFor="Client">Client</InputLabel>
-          <Select
-            className='createEvent_select client'
-            id="client_id"
-            value={this.state.client_id}
-            name="client_id"
-            onChange={this.handleInputChange}
-            style={{minWidth:120}}
-          >
-            {
-              JSON.parse(localStorage.getItem('token')).relation.map(person => (
-                <MenuItem value={person.id}>{person.first_name} {person.last_name}</MenuItem>
-              ))
-            }
-          </Select>
-          <br/>
-          <Button type="submit" color="primary" className='createEvent_btn save'>
-            Save
-            <AddIcon className='rightIcon'/>
-          </Button>
-          <Button color="primary" className='createEvent_btn'>
-              <a href="/calendar" className='createEvent_anchor'>Cancel</a>
-              <CancelIcon className='rightIcon'/>
-          </Button>
-        </form>
+            <TextField
+              className='createEvent_input'
+              name = "title"
+              label="Title"
+              style={{ margin: 8 }}
+              placeholder="Enter title of event"
+              margin="normal"
+              onChange={this.handleInputChange}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start" className='icon'>
+                    <Title />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <br/>
+            <TextField
+              className='createEvent_input'
+              name = "description"
+              label="Description"
+              style={{ margin: 8 }}
+              placeholder="Enter description of event"
+              margin="normal"
+              multiline
+              onChange={this.handleInputChange}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start" className='icon'>
+                    <Description />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <br/>
+            <DatePicker
+              className='createEvent_time start'
+              size='default'
+              placeholder='YYYY-MM-DD'
+              onChange={this.handleStartInput}
+            />
+            <DatePicker
+              className='createEvent_time end'
+              size='default'
+              placeholder='YYYY-MM-DD'
+              onChange={this.handleEndInput}
+            />
+            <br/>
+            <InputLabel htmlFor="allday">All Day</InputLabel>
+            <Select
+              className='createEvent_select__allday'
+              id="allday"
+              value={this.state.allday}
+              name="allday"
+              onChange={this.handleInputChange}
+              style={{minWidth: 120}}
+            >
+              <MenuItem value={'true'}>True</MenuItem>
+              <MenuItem value={'false'}>False</MenuItem>
+            </Select>
+            <br/>
+            <InputLabel htmlFor="Client">Client</InputLabel>
+            <Select
+              className='createEvent_select client'
+              id="client_id"
+              value={this.state.client_id}
+              name="client_id"
+              onChange={this.handleInputChange}
+              style={{minWidth:120}}
+            >
+              {
+                JSON.parse(localStorage.getItem('token')).relation.map(person => (
+                  <MenuItem value={person.id}>{person.first_name} {person.last_name}</MenuItem>
+                ))
+              }
+            </Select>
+            <br/>
+            <Button type="submit" color="primary" className='createEvent_btn save'>
+              Save
+              <AddIcon className='rightIcon'/>
+            </Button>
+            <Button color="primary" className='createEvent_btn'>
+                <a href="/calendar" className='createEvent_anchor'>Cancel</a>
+                <CancelIcon className='rightIcon'/>
+            </Button>
+          </form>
+        </div>
       </div>
 
     );
@@ -175,3 +169,38 @@ class CreateEvent extends Component {
 
 export default CreateEvent
 
+
+
+            // <TextField
+            //   className='createEvent_time start'
+            //   name = "start"
+            //   label="Start Date"
+            //   style={{ margin: 8 }}
+            //   placeholder="YYYY-MM-DD"
+            //   margin="normal"
+            //   onChange={this.handleInputChange}
+            //   InputProps={{
+            //     startAdornment: (
+            //       <InputAdornment position="start" className='icon'>
+            //         <DateRange />
+            //       </InputAdornment>
+            //     ),
+            //   }}
+            // />
+
+            // <TextField
+            //   className='createEvent_time end'
+            //   name = "end"
+            //   label="End Date"
+            //   style={{ margin: 8 }}
+            //   placeholder="YYYY-MM-DD"
+            //   margin="normal"
+            //   onChange={this.handleInputChange}
+            //   InputProps={{
+            //     startAdornment: (
+            //       <InputAdornment position="start" className='icon'>
+            //         <DateRange />
+            //       </InputAdornment>
+            //     ),
+            //   }}
+            // />

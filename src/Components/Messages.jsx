@@ -37,9 +37,8 @@ export default class Messages extends Component {
               </ListItem>
             </List>
           </div>
-          )
+        )
       })
-
 
     const messageRender = this.props.messages.map((msg) =>  {
         return (

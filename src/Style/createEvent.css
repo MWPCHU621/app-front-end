@@ -3,9 +3,18 @@
   to {opacity: 1;}
 }
 
-body {
-  background-color:#1f2833;
+html, body {
+  margin:0;
+  height:100%;
 }
+
+/*body {
+  background-image:url("./Images/Health-and-mental-health-benefits-of-exercise.jpg");
+
+  background-repeat: no-repeat;
+  background-size:cover;
+  background-position: center;
+}*/
 
 .createEvent_container {
   text-align: center;
@@ -27,7 +36,8 @@ body {
 }
 
 .createEvent_time  {
-  width: 11.5rem !important;
+  width: 12rem !important;
+  margin-top:0.5rem !important;
 }
 .createEvent_dateRange {
   padding:0;
@@ -63,7 +73,7 @@ body {
 }
 
 .createEvent_btn {
-  margin:1rem 0 1rem 0 !important;
+  margin:0.5rem 0 1rem 0 !important;
   border: 1px solid darkgrey !important;
   width: 11.5rem !important;
 }

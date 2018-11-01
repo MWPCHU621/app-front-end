@@ -1,6 +1,7 @@
 import React from 'react';
 import  { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Moment from 'moment'
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
@@ -9,6 +10,8 @@ import axios from 'axios'
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import CloseIcon from '@material-ui/icons/Close';
+import DescriptionIcon from '@material-ui/icons/Description'
+import TimeIcon from '@material-ui/icons/AccessTime'
 import '../Style/calendarDialog.css'
 
 function getModalStyle() {
@@ -58,9 +61,6 @@ class SimpleModal extends React.Component {
     })
   }
 
-  //onclick action for when slots are pressed.
-  // onClick={this.props.eventClickAction}
-
   render() {
     const { classes, eventInfo } = this.props;
 
@@ -73,7 +73,7 @@ class SimpleModal extends React.Component {
 
     let editButton;
     let deleteButton;
-    if(JSON.parse(localStorage.getItem('token')).role === "doctor") {
+    if(JSON.parse(localStorage.getItem('token')).role !== "client") {
       editButton =
         <Button onClick={this.redirectToEdit}className='modal-btn'>
           Edit
@@ -92,8 +92,8 @@ class SimpleModal extends React.Component {
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
           open={this.props.show}
-          onClose={this.eventClickAction}
-
+          onClose={this.props.eventClickAction}
+          onEscapeKeyDown={this.props.eventClickAction}
         >
           <div style={getModalStyle()} className={classes.paper} id='modal-container'>
             <Typography variant="h6" id="modal-title" className='modal-title'>
@@ -104,13 +104,15 @@ class SimpleModal extends React.Component {
               id="simple-modal-description"
               className='modal-description'
             >
-                {eventInfo.description}
+                <DescriptionIcon className='leftIcon' />  {eventInfo.description}
+                <br/>
+                <TimeIcon className='leftIcon' />  {Moment(eventInfo.start).format('MM-DD-YYYY')}
             </Typography>
 
             <div className='modal-btnContainer'>
               {editButton}
               {deleteButton}
-              <Button className='modal-btn'>
+              <Button className='modal-btn' onClick={this.props.eventClickAction}>
                   Close
                   <CloseIcon className='leftIcon' />
               </Button>

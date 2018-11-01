@@ -17,7 +17,7 @@ import EditEvent from  './EditEvent.jsx'
 import Home from './Home.jsx'
 import Todo from './todo.jsx'
 import Nutrition from './nutrition/nutrition.jsx'
-import Exercise from './Components/nutrition/exercise.jsx'
+import Exercise from './nutrition/exercise.jsx'
 // import Search from './Search.jsx'
 
 import createHistory from 'history/createBrowserHistory'
@@ -87,9 +87,9 @@ class App extends Component {
     let myStorage = window.localStorage;
     myStorage.setItem("token", JSON.stringify(token))
   }
-  // reset_notification_helper = (notification) => {
-  //   this.setState({notification: 0});
-  // }
+  reset_notification_helper = (notification) => {
+    this.setState({notification: 0});
+  }
 
   render() {
     if (this.state.userid) {
@@ -130,12 +130,12 @@ class App extends Component {
     }
 
     return (
-      <div>
+      <div className="app_container">
         <Router>
           <Switch>
             <Route exact path="/" render={() => (
-              <div>
-                <Sidebar/>
+              <div className='app_routeContainer'>
+                <Sidebar history={history}  notification={this.state.notification}/>
                   <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
                 <div className="app_mainContent">
                   <Home />
@@ -144,7 +144,7 @@ class App extends Component {
               )}
             />
             <Route exact path="/dashboard" render={() => (
-              <div>
+              <div className='app_routeContainer'>
                 <Sidebar history={history} notification={this.state.notification} />
                   <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
                 <div className="app_mainContent">
@@ -155,17 +155,17 @@ class App extends Component {
               </div>)}
             />
             <Route path="/register" render={() => (
-              <div>
+              <div className='app_routeContainer'>
                 <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
                 <Register history={history} />
               </div>)} />
             <Route path="/login" render={() => (
-              <div>
+              <div className='app_routeContainer'>
                 <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
                 <Login history={history} handleLogin={this.handleLogin} />
               </div>) } />
             <Route exact path="/calendar" render={(props) => (
-              <div>
+              <div className='app_routeContainer'>
                 <Sidebar history={history} notification={this.state.notification} />
                   <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
                 <div className="app_mainContent">
@@ -175,7 +175,7 @@ class App extends Component {
             <Route exact path = "/calendar/create_event" component = {CreateEvent} />
             <Route exact path = "/calendar/edit_event" component={EditEvent} />
             <Route path="/messages" render={(props) => (
-              <div>
+              <div className='app_routeContainer'>
                 <Sidebar history={history} notification={this.state.notification} />
                   <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
                 <div className="app_mainContent" >
@@ -185,7 +185,7 @@ class App extends Component {
                 </div>
               </div>)} />
             <Route path="/reminder" render={(props) => (
-              <div>
+              <div className='app_routeContainer'>
                 <Sidebar history={history} notification={this.state.notification} />
                 <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
                 <div className="app_mainContent" >
@@ -193,7 +193,7 @@ class App extends Component {
                 </div>
               </div>)} />
             <Route path="/nutrition" render={(props) => (
-              <div>
+              <div className='app_routeContainer'>
                 <Sidebar history={history} notification={this.state.notification} />
                 <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
                 <div className="app_mainContent">
@@ -201,7 +201,7 @@ class App extends Component {
                 </div>
               </div>)} />
             <Route path="/exercise" render={(props) => (
-              <div>
+              <div className='app_routeContainer'>
                 <Sidebar history={history} notification={this.state.notification} />
                 <Nav userid={this.state.userid} handleLogout={this.handleLogout} />
                 <div className='app_mainContent'>

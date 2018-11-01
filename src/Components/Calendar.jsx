@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
-import "react-big-calendar/lib/css/react-big-calendar.css"
-import CalendarDialog from './CalendarDialog.jsx'
-import Button from '@material-ui/core/Button';
 import axios from 'axios'
+import CalendarDialog from './CalendarDialog.jsx'
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import AddIcon from '@material-ui/icons/AddCircle'
+import "react-big-calendar/lib/css/react-big-calendar.css"
 import '../Style/calendar.css'
 
 const localizer = BigCalendar.momentLocalizer(moment);
@@ -64,28 +66,35 @@ class Calendar extends Component {
   render() {
     let addButton;
     if(JSON.parse(localStorage.getItem('token')).role !== "client"){
-      addButton = <Button
-        onClick={this.createEventRouteChange}
-        style={{border:"1px solid lightgrey", borderRadius:"2px"}}
-        className='Calendar_addEventBtn'>
-          Add new Event
-      </Button>
+      addButton =
+        <AddIcon
+          onClick={this.createEventRouteChange}
+          className='Calendar_addEventBtn'
+          color='primary'
+        />
     }
     return(
 
       <div style={{height: '800px'}}>
+        <AppBar position="static" color="default">
+          <Toolbar>
+              Calendar
+          </Toolbar>
+        </AppBar>
         {addButton}
         <BigCalendar
+          className='calendar'
           localizer={localizer}
           events={this.state.events}
           startAccessor="start"
           endAccessor="end"
           onSelectEvent={this.eventClickAction}
+          onSelectSlot={this.createEventRouteChange}
           timeslots={2}
           step={30}
           selectable
-          onSelectSlot = {() => {window.alert()}}
         />
+
         <div>
           {this.state.show ?
             <CalendarDialog

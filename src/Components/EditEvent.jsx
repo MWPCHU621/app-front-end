@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import  { Redirect } from 'react-router-dom'
 import axios from 'axios'
 
+import { DatePicker } from 'antd';
+import moment from 'moment';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -50,6 +52,14 @@ class EditEvent extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  handleStartInput = e => {
+    this.setState({ start:e.format('YYYY-MM-DD')})
+  }
+
+  handleEndInput = e => {
+    this.setState({end:e.format('YYYY-MM-DD')})
+  }
+
 
 
   render() {
@@ -59,7 +69,7 @@ class EditEvent extends Component {
     }
     return (
       <div className='editEvent_container'>
-        <h2 className='createEvent_title'>Edit Event</h2>
+        <h1 className='createEvent_title'>Edit Event</h1>
         <form onSubmit={this.handleSubmit} className='createEvent_form'>
 
           <TextField
@@ -98,39 +108,19 @@ class EditEvent extends Component {
             }}
           />
           <br/>
-          <TextField
+          <DatePicker
             className='createEvent_time start'
-            name = "start"
-            label="Start Date"
-            style={{ margin: 8 }}
-            placeholder="YYYY-MM-DD"
-            value={this.state.start}
-            margin="normal"
-            onChange={this.handleInputChange}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start" className='icon'>
-                  <DateRange />
-                </InputAdornment>
-              ),
-            }}
+            size='default'
+            placeholder='YYYY-MM-DD'
+            value={moment(this.state.start)}
+            onChange={this.handleStartInput}
           />
-          <TextField
+          <DatePicker
             className='createEvent_time end'
-            name = "end"
-            label="End Date"
-            style={{ margin: 8 }}
-            placeholder="YYYY-MM-DD"
-            value={this.state.end}
-            margin="normal"
-            onChange={this.handleInputChange}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start" className='icon'>
-                  <DateRange />
-                </InputAdornment>
-              ),
-            }}
+            size='default'
+            placeholder='YYYY-MM-DD'
+            value={moment(this.state.end)}
+            onChange={this.handleEndInput}
           />
           <br/>
           <InputLabel htmlFor="allday">All Day</InputLabel>
