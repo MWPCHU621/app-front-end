@@ -12,7 +12,6 @@ import axios from 'axios'
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-// import DeleteIcon from '@material-ui/icons/Delete';
 class Nutrition extends Component {
   constructor(props) {
     super(props);
@@ -22,6 +21,7 @@ class Nutrition extends Component {
       relation: props.userInfo.relation,
       tab: 0,
       foods: [],
+      list_client_foods: {},
       new_food: '',
     }
   }
@@ -42,25 +42,22 @@ class Nutrition extends Component {
     }
     axios(options)
     .then((response) => {
-      console.log(response.data)
+      if (this.state.role === 'client') {
+        this.setState({foods: response.data.foods})
+      } else {
+        const list_client_foods = {};
+        response.data.foods.map((food) => {
+          if (!list_client_foods[food.user_id]) {
+            list_client_foods[food.user_id] = [food]
+          } else {
+            list_client_foods[food.user_id].push(food);
+          }
+        })
+        this.setState({list_client_foods})
+      }
     })
   }
 
-  // delete_helper = (id) => {
-  //   const options = {
-  //     method: "POST",
-  //     url: 'http://localhost:3000/api/tasks/destroy',
-  //     data: {id: id,
-  //       client_id: this.state.userid,
-  //     }
-  //   }
-  //   axios(options)
-  //   .then((response) => {
-  //     const tasks = this.state.tasks;
-  //     tasks[userid] = response.data.reminders;
-  //     this.setState({tasks})
-  //   })
-  // }
   handleClick = () => {
     const options = {
       method: "POST",
@@ -82,30 +79,30 @@ class Nutrition extends Component {
     .then((response) => {
       console.log(response.data.foods)
       if (response.data) {
-        let newfood = response.data.foods.map(food => {
+        // let newfood = response.data.foods.map(food => {
+          let food = response.data.foods[0]
           let modified = {};
           modified.user_id = this.state.userid
-          modified.name = food.name
+          modified.name = food.food_name
           modified.quantity = food.serving_qty
           modified.serving_size = food.serving_weight_grams
           modified.calories = food.nf_calories
           modified.carbohydrates = food.nf_total_carbohydrate
           modified.protein = food.nf_protein
           modified.fat = food.nf_total_fat;
-          return modified;
-        })
+        //   return modified;
+        // })
         const option = {
           method: "POST",
           url: 'http://localhost:3000/api/nutritions/create',
           data: {
-            newfood: newfood,
+            nutritions: modified
           }
         }
         axios(option)
         .then((response) => {
-          const foods = this.state.foods;
-          foods = foods.concat(response.data.foods)
-          this.setState({foods: foods})
+          console.log(response.data.foods)
+          this.setState({foods: response.data.foods})
         })
       }
     })
@@ -115,21 +112,29 @@ class Nutrition extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  // delete_icon = (food) => {
-  //   if (JSON.parse(localStorage.getItem('token')).role === "client") {
-  //   return (<TableCell>
-  //                   <Button variant="fab" aria-label="Delete" onClick={() => this.delete_helper(food.id)}>
-  //                     <DeleteIcon />
-  //                   </Button>
-  //                 </TableCell>
-  //     )
-  // }
 
+  list_client_foods_helper = (person) => {
+    console.log(person.id)
+    console.log(this.state.list_client_foods[person.id])
 
+    return this.state.list_client_foods[person.id] ? this.state.list_client_foods[person.id] : [];
+  }
   render() {
-    let add_food
+    let table
     if (this.state.role === 'client') {
-      add_food = <TableRow><TableCell>
+      table = <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Quantity</TableCell>
+                  <TableCell>Serving Size (g)</TableCell>
+                  <TableCell>Calories</TableCell>
+                  <TableCell>Carbohydrates (g)</TableCell>
+                  <TableCell>Protein (g)</TableCell>
+                  <TableCell>Fat (g)</TableCell>
+                </TableRow>
+              </TableHead><TableBody>
+      <TableRow><TableCell>
                 <TextField
                   name = "new_food"
                   label="New Food"
@@ -145,7 +150,22 @@ class Nutrition extends Component {
                   <AddIcon />
                 </Button></TableCell>
                 </TableRow>
-            }
+                {this.state.foods.map((food, index) => (
+                    <TableRow key={index}>
+                    <TableCell>{food.name}</TableCell>
+                    <TableCell>{food.quantity}</TableCell>
+                    <TableCell>{food.serving_size}</TableCell>
+                    <TableCell>{food.calories}</TableCell>
+                    <TableCell>{food.carbohydrates}</TableCell>
+                    <TableCell>{food.protein}</TableCell>
+                    <TableCell>{food.fat}</TableCell>
+                    </TableRow>
+                  ))
+              }
+                </TableBody></Table>
+
+    }
+
     return (
       <div>
         <AppBar position="static" color="default">
@@ -163,7 +183,8 @@ class Nutrition extends Component {
           }
           </Tabs>
         </AppBar>
-        {
+        {table}
+        {this.state.role !== 'client' &&
           this.state.relation.map((person, index) => (
             this.state.tab === index &&
             <Table>
@@ -179,9 +200,7 @@ class Nutrition extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-              {add_food}
-                {
-                  this.state.foods.map((food, index) => (
+              { this.list_client_foods_helper(person).map((food, index) => (
                     <TableRow key={index}>
                     <TableCell>{food.name}</TableCell>
                     <TableCell>{food.quantity}</TableCell>
@@ -192,12 +211,12 @@ class Nutrition extends Component {
                     <TableCell>{food.fat}</TableCell>
                     </TableRow>
                   ))
-                }
+            }
               </TableBody>
             </Table>
             )
           )
-        }
+    }
       </div>
     );
   }

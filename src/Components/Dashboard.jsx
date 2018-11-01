@@ -46,8 +46,7 @@ export default class Dashboard extends Component {
   render() {
     let tabs;
     let addClient;
-    if (JSON.parse(localStorage.getItem('token')).role !== "client") {
-      tabs = <Tabs value={this.state.tab} onChange={this.handleChange}>
+    tabs = <Tabs value={this.state.tab} onChange={this.handleChange}>
       <Tab label="New Client" />
       {
         this.state.relation.map((person, index) => (
@@ -55,6 +54,8 @@ export default class Dashboard extends Component {
         ))
       }
       </Tabs>
+    if (JSON.parse(localStorage.getItem('token')).role !== "client") {
+
 
       addClient = <div>
         {
@@ -85,6 +86,24 @@ export default class Dashboard extends Component {
             </div>))
         }
       </div>
+    } else {
+      addClient = <div> {this.state.relation.map((person, index) => (
+            (this.state.tab - 1) === index &&
+            <div className='dashboard_description'>
+              <label className='dashboard_description__label'>Doctor: </label>
+              <label className='dashboard_description__name'>{person.first_name} {person.last_name}</label>
+              <label className='dashboard_description__lname'></label>
+              <br></br>
+              <label className='dashboard_description__label'>Email: </label>
+              <label className='dashboard_description__email'>{person.email}</label>
+              <label className='dashboard_description__label'>Role: </label>
+              <label className='dashboard_description__email'>{person.role}</label>
+
+
+            </div>))
+        }
+        </div>
+
     }
 
     return (
@@ -100,6 +119,7 @@ export default class Dashboard extends Component {
         </AppBar>
         <h1 className='dashboard_greeting'>Welcome Back! {JSON.parse(localStorage.getItem('token')).first_name}</h1>
         {addClient}
+
       </div>
     );
   }
