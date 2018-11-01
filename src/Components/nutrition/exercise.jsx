@@ -13,7 +13,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 // import DeleteIcon from '@material-ui/icons/Delete';
-class Nutrition extends Component {
+class Exercise extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,33 +47,20 @@ class Nutrition extends Component {
       if (this.state.role === 'client') {
         this.setState({exercises: response.data.exercises})
       } else {
-        response.data.exercises.forEach((exercise) => {
-          if (!this.state.list_client_exercises[exercise.user_id]) {
-            this.state.list_client_exercises[exercise.user_id] = [exercise]
+        const list_client_exercises = {};
+        response.data.exercises.map((exercise) => {
+          if (!list_client_exercises[exercise.user_id]) {
+            list_client_exercises[exercise.user_id] = [exercise]
           } else {
-            this.state.list_client_exercises[exercise.user_id].push(exercise);
+            list_client_exercises[exercise.user_id].push(exercise);
           }
         })
+        this.setState({list_client_exercises})
       }
     })
 
   }
 
-  // delete_helper = (id) => {
-  //   const options = {
-  //     method: "POST",
-  //     url: 'http://localhost:3000/api/tasks/destroy',
-  //     data: {id: id,
-  //       client_id: this.state.userid,
-  //     }
-  //   }
-  //   axios(options)
-  //   .then((response) => {
-  //     const tasks = this.state.tasks;
-  //     tasks[userid] = response.data.reminders;
-  //     this.setState({tasks})
-  //   })
-  // }
   handleClick = () => {
     const options = {
       method: "POST",
@@ -113,8 +100,6 @@ class Nutrition extends Component {
         }
         axios(option)
         .then((response) => {
-          // const exercises = this.state.exercises;
-          // exercises = exercises.concat(response.data.exercises[0])
           this.setState({exercises: response.data.exercises})
         })
       }
@@ -124,18 +109,9 @@ class Nutrition extends Component {
   handleInputChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
-
-  // delete_icon = (food) => {
-  //   if (JSON.parse(localStorage.getItem('token')).role === "client") {
-  //   return (<TableCell>
-  //                   <Button variant="fab" aria-label="Delete" onClick={() => this.delete_helper(food.id)}>
-  //                     <DeleteIcon />
-  //                   </Button>
-  //                 </TableCell>
-  //     )
-  // }
-
-
+  list_client_foods_helper = (person) => {
+    return this.state.list_client_exercises[person.id] ? this.state.list_client_exercises[person.id] : [];
+  }
   render() {
     let add_food
     if (this.state.role === 'client') {
@@ -186,7 +162,7 @@ class Nutrition extends Component {
               </TableHead>
               <TableBody>
               {add_food}
-                {
+                { this.state.role === 'client' &&
                   this.state.exercises.map((exercise, index) => (
                     <TableRow key={index}>
                     <TableCell>{exercise.name}</TableCell>
@@ -195,6 +171,15 @@ class Nutrition extends Component {
                     </TableRow>
                   ))
                 }
+                { this.state.role !== 'client' &&
+                this.list_client_foods_helper(person).map((exercise, index) => (
+                    <TableRow key={index}>
+                    <TableCell>{exercise.name}</TableCell>
+                    <TableCell>{exercise.duration}</TableCell>
+                    <TableCell>{exercise.calories}</TableCell>
+                    </TableRow>
+                  ))
+            }
               </TableBody>
             </Table>
             )
@@ -206,4 +191,4 @@ class Nutrition extends Component {
 
 }
 
-export default Nutrition
+export default Exercise

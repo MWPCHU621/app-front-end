@@ -12,7 +12,6 @@ import axios from 'axios'
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-// import DeleteIcon from '@material-ui/icons/Delete';
 class Nutrition extends Component {
   constructor(props) {
     super(props);
@@ -46,34 +45,19 @@ class Nutrition extends Component {
       if (this.state.role === 'client') {
         this.setState({foods: response.data.foods})
       } else {
-        console.log(response.data.foods)
+        const list_client_foods = {};
         response.data.foods.map((food) => {
-          if (!this.state.list_client_foods[food.user_id]) {
-            this.state.list_client_foods[food.user_id] = [food]
+          if (!list_client_foods[food.user_id]) {
+            list_client_foods[food.user_id] = [food]
           } else {
-            this.state.list_client_foods[food.user_id].push(food);
+            list_client_foods[food.user_id].push(food);
           }
         })
-        console.log(this.state.list_client_foods)
+        this.setState({list_client_foods})
       }
     })
   }
 
-  // delete_helper = (id) => {
-  //   const options = {
-  //     method: "POST",
-  //     url: 'http://localhost:3000/api/tasks/destroy',
-  //     data: {id: id,
-  //       client_id: this.state.userid,
-  //     }
-  //   }
-  //   axios(options)
-  //   .then((response) => {
-  //     const tasks = this.state.tasks;
-  //     tasks[userid] = response.data.reminders;
-  //     this.setState({tasks})
-  //   })
-  // }
   handleClick = () => {
     const options = {
       method: "POST",
@@ -118,8 +102,6 @@ class Nutrition extends Component {
         axios(option)
         .then((response) => {
           console.log(response.data.foods)
-          // let foods = this.state.foods;
-          // foods = foods.concat(response.data.foods)
           this.setState({foods: response.data.foods})
         })
       }
@@ -130,17 +112,11 @@ class Nutrition extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  // delete_icon = (food) => {
-  //   if (JSON.parse(localStorage.getItem('token')).role === "client") {
-  //   return (<TableCell>
-  //                   <Button variant="fab" aria-label="Delete" onClick={() => this.delete_helper(food.id)}>
-  //                     <DeleteIcon />
-  //                   </Button>
-  //                 </TableCell>
-  //     )
-  // }
 
   list_client_foods_helper = (person) => {
+    console.log(person.id)
+    console.log(this.state.list_client_foods[person.id])
+
     return this.state.list_client_foods[person.id] ? this.state.list_client_foods[person.id] : [];
   }
   render() {
@@ -188,8 +164,28 @@ class Nutrition extends Component {
               }
                 </TableBody></Table>
 
-    } else {
-      table = this.state.relation.map((person, index) => (
+    }
+
+    return (
+      <div>
+        <AppBar position="static" color="default">
+          <Toolbar>
+              Nutrition
+          </Toolbar>
+        </AppBar>
+
+        <AppBar position="static">
+          <Tabs value={this.state.tab} onChange={this.handleChange}>
+          {
+            this.state.relation.map((person, index) => (
+              <Tab label={person.first_name} />
+            ))
+          }
+          </Tabs>
+        </AppBar>
+        {table}
+        {this.state.role !== 'client' &&
+          this.state.relation.map((person, index) => (
             this.state.tab === index &&
             <Table>
               <TableHead>
@@ -217,31 +213,10 @@ class Nutrition extends Component {
                   ))
             }
               </TableBody>
-
             </Table>
             )
           )
-
     }
-
-    return (
-      <div>
-        <AppBar position="static" color="default">
-          <Toolbar>
-              Nutrition
-          </Toolbar>
-        </AppBar>
-
-        <AppBar position="static">
-          <Tabs value={this.state.tab} onChange={this.handleChange}>
-          {
-            this.state.relation.map((person, index) => (
-              <Tab label={person.first_name} />
-            ))
-          }
-          </Tabs>
-        </AppBar>
-        {table}
       </div>
     );
   }
