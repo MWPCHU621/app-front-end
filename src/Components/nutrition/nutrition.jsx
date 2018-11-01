@@ -43,17 +43,18 @@ class Nutrition extends Component {
     }
     axios(options)
     .then((response) => {
-      console.log(response.data.foods)
       if (this.state.role === 'client') {
         this.setState({foods: response.data.foods})
       } else {
-        response.data.foods.forEach((food) => {
-          if (!this.list_client_foods[food.user_id]) {
-            this.list_client_foods[food.user_id] = [food]
+        console.log(response.data.foods)
+        response.data.foods.map((food) => {
+          if (!this.state.list_client_foods[food.user_id]) {
+            this.state.list_client_foods[food.user_id] = [food]
           } else {
-            this.list_client_foods[food.user_id].push(food);
+            this.state.list_client_foods[food.user_id].push(food);
           }
         })
+        console.log(this.state.list_client_foods)
       }
     })
   }
@@ -94,30 +95,32 @@ class Nutrition extends Component {
     .then((response) => {
       console.log(response.data.foods)
       if (response.data) {
-        let newfood = response.data.foods.map(food => {
+        // let newfood = response.data.foods.map(food => {
+          let food = response.data.foods[0]
           let modified = {};
           modified.user_id = this.state.userid
-          modified.name = food.name
+          modified.name = food.food_name
           modified.quantity = food.serving_qty
           modified.serving_size = food.serving_weight_grams
           modified.calories = food.nf_calories
           modified.carbohydrates = food.nf_total_carbohydrate
           modified.protein = food.nf_protein
           modified.fat = food.nf_total_fat;
-          return modified;
-        })
+        //   return modified;
+        // })
         const option = {
           method: "POST",
           url: 'http://localhost:3000/api/nutritions/create',
           data: {
-            newfood: newfood,
+            nutritions: modified
           }
         }
         axios(option)
         .then((response) => {
-          const foods = this.state.foods;
-          foods = foods.concat(response.data.foods)
-          this.setState({foods: foods})
+          console.log(response.data.foods)
+          // let foods = this.state.foods;
+          // foods = foods.concat(response.data.foods)
+          this.setState({foods: response.data.foods})
         })
       }
     })
@@ -138,12 +141,23 @@ class Nutrition extends Component {
   // }
 
   list_client_foods_helper = (person) => {
-    return this.list_client_foods[person.id]? this.list_client_foods[person.id] : [];
+    return this.state.list_client_foods[person.id] ? this.state.list_client_foods[person.id] : [];
   }
   render() {
     let table
     if (this.state.role === 'client') {
-      table = <TableBody>
+      table = <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Quantity</TableCell>
+                  <TableCell>Serving Size (g)</TableCell>
+                  <TableCell>Calories</TableCell>
+                  <TableCell>Carbohydrates (g)</TableCell>
+                  <TableCell>Protein (g)</TableCell>
+                  <TableCell>Fat (g)</TableCell>
+                </TableRow>
+              </TableHead><TableBody>
       <TableRow><TableCell>
                 <TextField
                   name = "new_food"
@@ -172,7 +186,7 @@ class Nutrition extends Component {
                     </TableRow>
                   ))
               }
-                </TableBody>
+                </TableBody></Table>
 
     } else {
       table = this.state.relation.map((person, index) => (
@@ -190,7 +204,7 @@ class Nutrition extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-              { this.state.list_client_foods_helper(person).map((food, index) => (
+              { this.list_client_foods_helper(person).map((food, index) => (
                     <TableRow key={index}>
                     <TableCell>{food.name}</TableCell>
                     <TableCell>{food.quantity}</TableCell>

@@ -12,7 +12,7 @@ import axios from 'axios'
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import DeleteIcon from '@material-ui/icons/Delete';
+// import DeleteIcon from '@material-ui/icons/Delete';
 class Nutrition extends Component {
   constructor(props) {
     super(props);
@@ -22,6 +22,7 @@ class Nutrition extends Component {
       relation: props.userInfo.relation,
       tab: 0,
       exercises: [],
+      list_client_exercises: {},
       new_exercise: '',
     }
   }
@@ -37,13 +38,25 @@ class Nutrition extends Component {
     }
     const options = {
       method: "GET",
-      url: 'http://localhost:3000/api/nutritions/index',
+      url: 'http://localhost:3000/api/exercises/index',
       params: {id: id}
     }
     axios(options)
     .then((response) => {
-      console.log(response.data)
+      console.log(response.data.exercises)
+      if (this.state.role === 'client') {
+        this.setState({exercises: response.data.exercises})
+      } else {
+        response.data.exercises.forEach((exercise) => {
+          if (!this.state.list_client_exercises[exercise.user_id]) {
+            this.state.list_client_exercises[exercise.user_id] = [exercise]
+          } else {
+            this.state.list_client_exercises[exercise.user_id].push(exercise);
+          }
+        })
+      }
     })
+
   }
 
   // delete_helper = (id) => {
@@ -72,7 +85,7 @@ class Nutrition extends Component {
         'Content-Type': 'application/json',
       },
       data: {
-        query: 'running',//this.state.new_exercise,
+        query: this.state.new_exercise,
         "gender":"female",
          "weight_kg":72.5,
          "height_cm":167.64,
@@ -80,31 +93,29 @@ class Nutrition extends Component {
       }
     }
 
-    this.setState({new_food: ''})
+    this.setState({new_exercise: ''})
     axios(options)
     .then((response) => {
       console.log(response.data.exercises)
-      if (response.data) {
-        let newexercise = response.data.exercises.map(exercise => {
+      if (response.data.exercises.length !== 0) {
+        let newexercise = response.data.exercises[0]
           let modified = {};
           modified.user_id = this.state.userid
-          modified.name = exercise.name
-          modified.calories = exercise.nf_calories
-          modified.duration = exercise.duration_min
-          return modified;
-        })
+          modified.name = newexercise.name
+          modified.calories = newexercise.nf_calories
+          modified.duration = newexercise.duration_min
         const option = {
           method: "POST",
           url: 'http://localhost:3000/api/exercises/create',
           data: {
-            exercise: newexercise,
+            exercise: modified,
           }
         }
         axios(option)
         .then((response) => {
-          const exercises = this.state.exercises;
-          exercises = exercises.concat(response.data.exercises)
-          this.setState({exercises: exercises})
+          // const exercises = this.state.exercises;
+          // exercises = exercises.concat(response.data.exercises[0])
+          this.setState({exercises: response.data.exercises})
         })
       }
     })
@@ -149,7 +160,7 @@ class Nutrition extends Component {
       <div>
         <AppBar position="static" color="default">
           <Toolbar>
-              Nutrition
+              Exercise
           </Toolbar>
         </AppBar>
 
@@ -169,26 +180,18 @@ class Nutrition extends Component {
               <TableHead>
                 <TableRow>
                   <TableCell>Name</TableCell>
-                  <TableCell>Quantity</TableCell>
-                  <TableCell>Serving Size (g)</TableCell>
+                  <TableCell>Duration</TableCell>
                   <TableCell>Calories</TableCell>
-                  <TableCell>Carbohydrates (g)</TableCell>
-                  <TableCell>Protein (g)</TableCell>
-                  <TableCell>Fat (g)</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
               {add_food}
                 {
-                  this.state.exercises.map((food, index) => (
+                  this.state.exercises.map((exercise, index) => (
                     <TableRow key={index}>
-                    <TableCell>{food.food_name}</TableCell>
-                    <TableCell>{food.serving_qty}</TableCell>
-                    <TableCell>{food.serving_weight_grams}</TableCell>
-                    <TableCell>{food.nf_calories}</TableCell>
-                    <TableCell>{food.nf_total_carbohydrate}</TableCell>
-                    <TableCell>{food.nf_protein}</TableCell>
-                    <TableCell>{food.nf_total_fat}</TableCell>
+                    <TableCell>{exercise.name}</TableCell>
+                    <TableCell>{exercise.duration}</TableCell>
+                    <TableCell>{exercise.calories}</TableCell>
                     </TableRow>
                   ))
                 }
